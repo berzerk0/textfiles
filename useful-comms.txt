@@ -52,6 +52,8 @@ touch -t YYYYMMDDHHSS FILE    match file mod history to given time
 sudo fdisk -l    show attached disks
 dd if=/dev/urandom of=FILENAME bs=1 count=NUMBER_OF_BYTES    creates random binary file of given size
 
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w $(( ( RANDOM % 50) +1 )) | head -n 1	creates random alphanumeric string
+
 
 cat /etc/shadow | grep USER	print user password hash
 cat /etc/passwd	Show user list
