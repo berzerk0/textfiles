@@ -3,20 +3,20 @@ OPT FOLDER
 
 Hashing_Tools
 
--hashID
--Hash-Buster
+-hashID :https://github.com/psypanda/hashID
+-Hash-Buster :https://github.com/UltimateHackers/Hash-Buster
 
 
 Obfuscation_Tools
--Cloakify
+-Cloakify :https://github.com/TryCatchHCF/Cloakify
 -OWASP-ZSC
 
 
 
 Steganography_Tools
-img-encode
+img-encode :https://github.com/alexadam/img-encode
 Snow
-stegdetect
+stegdetect :https://github.com/abeluck/stegdetect
 stegsolve
 steghide
 
@@ -24,16 +24,16 @@ steghide
 
 Web Tools
 DIR - CMS_Tools
-	CMSmap
-	droopescan
+	CMSmap :https://github.com/Dionach/CMSmap
+	droopescan :https://github.com/droope/droopescan
 	
 
 DIR - Web-Shelling
-	b374k
+	b374k :https://github.com/b374k/b374k
 
 
 DIR - Bruting and Spidering
-	dirsearch
+	dirsearch :https://github.com/maurosoria/dirsearch
 	
 
 
@@ -43,19 +43,22 @@ Exploit_Tools
 Shells
 	monkey shell
 	simple php shell
-	python-pty-shells
-	PrivEsc
-	Findsploit
-	
+	python-pty-shells :https://github.com/infodox/python-pty-shells
+	PrivEsc :https://github.com/1N3/PrivEsc
+	Findsploit :https://github.com/1N3/Findsploit
+
+BruteX :https://github.com/1N3/BruteX
 
 
 Recon_Tools
 DIR - Twitter_Tools
-	tinfoleak
-	tweet_analyzer
+	tinfoleak :https://github.com/krmaxwell/tinfoleak
+	tweet_analyzer :https://github.com/x0rz/tweets_analyzer
+Sn1per :https://github.com/1N3/Sn1per
 
 DIR - Email_Tools
-	theHarvester
-	Infoga
+	theHarvester :https://github.com/laramies/theHarvester
+	Infoga :https://github.com/m4ll0k/Infoga
+	emailwhois :https://github.com/WebBreacher/emailwhois
 
--WhatsMyName
+WhatsMyName :https://github.com/WebBreacher/WhatsMyName
