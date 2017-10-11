@@ -20,6 +20,8 @@ tar xzf some_wordlists.tar.gz && rm some_wordlists.tar.gz
 mkdir ~/Generators && cd ~/Generators
 wget https://github.com/berzerk0/textfiles/raw/master/Generators.tar.gz && tar xzf Generators.tar.gz && rm Generators.tar.gz
 
+#GET OWL https://github.com/berzerk0/textfiles/blob/master/owl.png?raw=true
+
 #OPT FOLDER
 
 ##HASHING_TOOLS
@@ -27,6 +29,7 @@ mkdir /opt/Hashing_Tools && cd /opt/Hashing_Tools
 
 git clone https://github.com/psypanda/hashID
 git clone https://github.com/UltimateHackers/Hash-Buster
+git clone https://github.com/iagox86/hash_extender.git
 
 
 ##OBFUSCATION_TOOLS
