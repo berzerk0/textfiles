@@ -159,6 +159,12 @@ gedit /etc/hostname
 gedit /etc/hosts
 
 
+FILE TRANSFER
+
+cd DirWithFile; python -m SimpleHTTPServer PORTNUM	run on Sending Machine
+wget http://sending.machine.ip.addr:PORTNUM/file -O file	run on recieiving machine
+
+
 
 cat /usr/share/wireshark/manuf | grep -i (FIRST THREE PAIRS IN MAC)    MAC Vendor Lookup
 
