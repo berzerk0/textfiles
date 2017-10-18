@@ -49,8 +49,9 @@ cat FILE | tr '[A-Za-z]' '[N-ZA-Mn-za-m]'	encode/decode file to/from ROT13
 echo "STRING" | tr '[A-Za-z]' '[N-ZA-Mn-za-m]'	encode/decode file to/from ROT13
 
 
-
-
+THE - OPERATOR
+echo 'STRING' | cat FILE -	concatenate a string lines in a file
+cat THING | python - 	run lines from file in python, etc.
 
 
 
