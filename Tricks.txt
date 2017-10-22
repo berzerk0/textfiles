@@ -1,0 +1,13 @@
+
+Check for default credentials for a given service (HTB-Mirai)
+
+Create a wordlist of unique words on a website (HTB-Apocalyst)
+	-Use this for directory search
+	-Use this for password attempts
+	-Find rare or mispelled words
+
+Edit a Wordlist plugin to include PHP Code (Quaoar)
+
+Trick an Upload function by uploading an image, interecepting the HTTP request and changing the data to a script
+
+ 

@@ -8,7 +8,8 @@ apt-get install libreoffice
 apt-get install terminator
 apt-get install bleachbit
 
-
+#Install LXDE
+apt-get install lxde-core lxde kali-defaults kali-root-login desktop-base
 
 
 #WORDLISTS
@@ -30,6 +31,7 @@ mkdir /opt/Hashing_Tools && cd /opt/Hashing_Tools
 git clone https://github.com/psypanda/hashID
 git clone https://github.com/UltimateHackers/Hash-Buster
 git clone https://github.com/iagox86/hash_extender.git
+
 
 
 ##OBFUSCATION_TOOLS
