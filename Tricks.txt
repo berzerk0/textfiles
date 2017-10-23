@@ -10,4 +10,5 @@ Edit a Wordlist plugin to include PHP Code (Quaoar)
 
 Trick an Upload function by uploading an image, interecepting the HTTP request and changing the data to a script
 
+/bin/bash has some anti-buffer overflows, but /bin/sh does not. (Covfefe)
  
