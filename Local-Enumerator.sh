@@ -2,6 +2,8 @@
 
 #use WHICH or  if [ ! -f '/bin/PROGRAM' ]; then    to find programs
 #cat /etc/*release* find fedora, debian, etc.
+# browse user home dirs - which users have them?
+
 
 
 cd /dev/shm #move to temporary folder all users can usually access
