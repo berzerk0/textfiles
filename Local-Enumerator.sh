@@ -1,5 +1,9 @@
 ## HINKYPUNK INFORMATION GATHERING/LISTING SCRIPT
 
+#use WHICH or  if [ ! -f '/bin/PROGRAM' ]; then    to find programs
+#cat /etc/*release* find fedora, debian, etc.
+
+
 cd /dev/shm #move to temporary folder all users can usually access
 #history > .history_before_hinky.txt
 clear
