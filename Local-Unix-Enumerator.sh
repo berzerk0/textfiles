@@ -53,10 +53,10 @@ find / -perm -4000 -type f 2>/dev/null | tr ' ' '\n' | sort > ."$(whoami)_UID_fi
 echo "   >>> $(whoami) UID files written to $(pwd)/.$(whoami)_UID_files_HINKYPUNK"
 
 find / -perm -2 -type d 2>/dev/null | tr ' ' '\n' | sort > .world_writable_directories_HINKYPUNK
-echo "   >>> List of World Writeable FOLDERS written to $(pwd)/.world_writable_DIRS_HINKYPUNK"
+echo "   >>> List of World Writeable FOLDERS written to $(pwd)/.world_writeable_DIRS_HINKYPUNK"
 
 find / ! -path "*/proc/*" -perm -2 -type f -print 2>/dev/null | tr ' ' '\n' | sort > .world_writable_files_HINKYPUNK
-echo "   >>> List of World Writeable FILES (except in /proc/) written to $(pwd)/.world_writable_FILES_HINKYPUNK"
+echo "   >>> List of World Writeable FILES (except in /proc/) written to $(pwd)/.world_writeable_FILES_HINKYPUNK"
 fi
 
 find /home/ -type f -name '.*' '(' -exec test -r '{}' \; ')' -print 2>/dev/null | sort > .hidden_files_HINKYPUNK
