@@ -41,12 +41,15 @@ echo
 echo "Superusers on this machine are: $(grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1}')"
 echo
 
+echo "Users with /home/ dirs are: $(ls -l /home/  | sort | tr '\n' ' ')"
+
 if ! [ $(id -u) = 0 ];
 then
 
 if [ -d "/home/$(whoami)" ]; then
 echo "$(whoami) has a /home directory"
 fi
+
 
 
 find / -perm -4000 -type f 2>/dev/null | tr ' ' '\n' | sort > ."$(whoami)_UID_files.txt"
@@ -177,6 +180,9 @@ unset hinkp_ruby_ver
 #httpd -v
 #last -a
 
-#find /var/log ­type f ­perm 0004 2>/dev/nul
+#find files owned by root, executable by user
+#look for files with "database" in name
+#look for wp files, www/var
+# mail files
 
 
