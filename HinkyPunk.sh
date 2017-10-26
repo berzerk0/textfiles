@@ -42,6 +42,7 @@ echo "Superusers on this machine are: $(grep -v -E "^#" /etc/passwd | awk -F: '$
 echo
 
 echo "Users with /home/ dirs are: $(ls -l /home/  | sort | tr '\n' ' ')"
+echo 
 
 if ! [ $(id -u) = 0 ];
 then
@@ -107,6 +108,10 @@ unset hinkp_netcat_exists
 hinkp_python_ver=`which python`
 if [ "$hinkp_python_ver" ]; then
 python -V
+hinkp_python_pty=`python -c 'import pty;pty.spawn("/bin/sh")'`
+if [ "$hinkp_python_pty" ]; then
+python -c 'import pty;pty.spawn("/bin/sh")'
+echo 'Python TTY Spawned'
 else 
 echo "[-] Python not found"
 fi
