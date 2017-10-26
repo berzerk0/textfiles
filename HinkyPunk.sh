@@ -53,7 +53,7 @@ fi
 
 
 
-find / -perm -4000 -type f 2>/dev/null | tr ' ' '\n' | sort > ."$(whoami)_UID_files.txt"
+find / -perm -4000 -type f 2>/dev/null | tr ' ' '\n' | sort > ."$(whoami)_UID_files_HINKYPUNK"
 echo "   >>> $(whoami) UID files written to $(pwd)/.$(whoami)_UID_files_HINKYPUNK"
 
 find / -perm -2 -type d 2>/dev/null | tr ' ' '\n' | sort > .world_writable_directories_HINKYPUNK
@@ -105,13 +105,9 @@ fi
 unset hinkp_netcat_exists
 
 #Python
-hinkp_python_ver=`which python`
+hinkp_python_ver=`which python 2>/dev/null`
 if [ "$hinkp_python_ver" ]; then
 python -V
-hinkp_python_pty=`python -c 'import pty;pty.spawn("/bin/sh")'`
-if [ "$hinkp_python_pty" ]; then
-python -c 'import pty;pty.spawn("/bin/sh")'
-echo 'Python TTY Spawned'
 else 
 echo "[-] Python not found"
 fi
@@ -167,21 +163,49 @@ else
 echo "[-] Ruby not found"
 fi
 unset hinkp_ruby_ver
+echo
 
+echo
+echo '------INSTALLED PACKAGES------'
+echo
+
+#Packages
+hinkp_debian_packages=`dpkg -l 2>/dev/null` #debian
+if [ "$hinkp_debian_packages" ]; then
+dpkg -l 2>/dev/null > .installed_pkgs_HINKYPUNK
+echo "  >>> List of installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+unset hinkp_debian_packages
+
+else
+hinkp_rpm_packages=`rpm -qa 2>/dev/null` #rpm_packages
+if [ "$hinkp_rpm_packages" ]; then
+rpm -qa 2>/dev/null > .installed_pkgs_HINKYPUNK
+echo "  >>> List of installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+unset hinkp_rpm_packages
+
+else
+hinkp_yum_packages=`yum list | grep installed 2>/dev/null` #yum_packages
+if [ "$hinkp_yum_packages" ]; then
+yum list | grep installed 2>/dev/null > .installed_pkgs_HINKYPUNK
+echo "  >>> List of installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+unset hinkp_yum_packages
+
+else
+hinkp_pacman_packages=`#pacman -Q 2>/dev/null` #pacman_packages
+if [ "$hinkp_pacman_packages" ]; then
+pacman -Q 2>/dev/null > .installed_pkgs_HINKYPUNK
+echo "  >>> List of installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+unset hinkp_pacman_packages
 
 
 
 #echo '------SSH KEYS------'
 # ls /home/*/.ssh/
 
-#dpkg -l
-#rpm -qa
-#yum list | grep installed
-#pacman -Q
+
 #pkginfo
 #pkg_info
 
-#sudo -V
 #httpd -v
 #last -a
 
