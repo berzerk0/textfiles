@@ -1,3 +1,4 @@
+#!/bin/sh
 ## HINKYPUNK INFORMATION GATHERING/LISTING SCRIPT
 
 #use WHICH or  if [ ! -f '/bin/PROGRAM' ]; then    to find programs
@@ -41,7 +42,7 @@ echo
 echo "Superusers on this machine are: $(grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1}')"
 echo
 
-echo "Users with /home/ dirs are: $(ls -l /home/  | sort | tr '\n' ' ')"
+echo "Users with /home/ dirs are: $(ls /home/  | sort | tr '\n' ' ')"
 echo 
 
 if ! [ $(id -u) = 0 ];
@@ -71,6 +72,13 @@ echo "   >>> List of hidden but readable FOLDERS in /home/ written to $(pwd)/.hi
 echo "If you cannot read the files listed in the two hidden lists, the find command runs as root."
 
 
+#See recent activity
+hinkp_last_a=`last -a 2>/dev/null`
+if [ "$hinkp_last_a" ]; then
+last -a 2>/dev/null >> .recent_activity_HINKYPUNK
+echo "   >>> Recent Activity written to $(pwd)/.recent_activity_HINKYPUNK"
+unset hinkp_nc_exists
+ 
 
 
 echo
@@ -144,7 +152,7 @@ unset hinkp_perl_ver
 
 
 #Java
-hinkp_java_ver=`which java` 
+hinkp_java_ver=`which java 2>/dev/null` 
 if [ "$hinkp_java_ver" ]; then
 echo 'Java available'
 echo '-----'
@@ -173,30 +181,39 @@ echo
 hinkp_debian_packages=`dpkg -l 2>/dev/null` #debian
 if [ "$hinkp_debian_packages" ]; then
 dpkg -l 2>/dev/null > .installed_pkgs_HINKYPUNK
-echo "  >>> List of installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+echo "  >>> List of (debian) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
 unset hinkp_debian_packages
 
 else
 hinkp_rpm_packages=`rpm -qa 2>/dev/null` #rpm_packages
 if [ "$hinkp_rpm_packages" ]; then
 rpm -qa 2>/dev/null > .installed_pkgs_HINKYPUNK
-echo "  >>> List of installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+echo "  >>> List of (rpm) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
 unset hinkp_rpm_packages
 
 else
 hinkp_yum_packages=`yum list | grep installed 2>/dev/null` #yum_packages
 if [ "$hinkp_yum_packages" ]; then
 yum list | grep installed 2>/dev/null > .installed_pkgs_HINKYPUNK
-echo "  >>> List of installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+echo "  >>> List of (yum) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
 unset hinkp_yum_packages
 
 else
-hinkp_pacman_packages=`#pacman -Q 2>/dev/null` #pacman_packages
+hinkp_pacman_packages=`pacman -Q 2>/dev/null` #pacman_packages
 if [ "$hinkp_pacman_packages" ]; then
 pacman -Q 2>/dev/null > .installed_pkgs_HINKYPUNK
-echo "  >>> List of installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+echo "  >>> List of (pacman) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
 unset hinkp_pacman_packages
 
+fi
+fi
+fi
+fi
+fi
+
+echo
+echo
+echo "This output has also been saved to $(pwd)/.HINKYPUNK_OUTPUT"
 
 
 #echo '------SSH KEYS------'
@@ -207,7 +224,6 @@ unset hinkp_pacman_packages
 #pkg_info
 
 #httpd -v
-#last -a
 
 #find files owned by root, executable by user
 #look for files with "database" in name
