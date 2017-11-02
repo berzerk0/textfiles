@@ -1,12 +1,9 @@
 # UPDATE OS
 
 apt-get update && apt-get upgrade
-apt-get install exiftool
-apt-get install gimp
-apt-get install audacity
-apt-get install libreoffice
-apt-get install terminator
-apt-get install bleachbit
+apt-get install exiftool steghide terminator bleachbit
+apt-get install gimp audacity libreoffice
+
 
 #Install LXDE
 apt-get install lxde-core lxde kali-defaults kali-root-login desktop-base
