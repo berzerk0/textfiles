@@ -1,8 +1,11 @@
+#!/bin/bash
 # UPDATE OS
 
 apt-get update && apt-get upgrade
-apt-get install exiftool steghide terminator bleachbit openvas
-apt-get install gimp audacity libreoffice
+apt-get install exiftool steghide sakura bleachbit openvas gimp audacity libreoffice stegosuite
+#apt-get install exiftool steghide terminator bleachbit openvas
+#apt-get install gimp audacity libreoffice
+#apt-get install stegosuite
 
 
 #Install LXDE - if you want.
@@ -35,7 +38,7 @@ git clone https://github.com/iagox86/hash_extender.git
 mkdir /opt/Obfuscation_Tools && cd /opt/Obfuscation_Tools
 
 git clone https://github.com/TryCatchHCF/Cloakify
-git clone https://github.com/viraintel/OWASP-ZSC
+git clone https://github.com/viraintel/OWASP-ZSC && python /opt/Obfuscation_Tools/OWASP-ZSC/installer.py
 git clone https://github.com/liftoff/pyminifier
 
 
@@ -53,10 +56,6 @@ wget http://www.darkside.com.au/snow/snow-20130616.tar.gz && tar xzf snow-201306
 
 mkdir stegsolve && cd stegsolve
 wget http://www.caesum.com/handbook/Stegsolve.jar -O stegsolve.jar && chmod +x stegsolve.jar
-
-
-
-apt-get install stegosuite
 
 
 ##OSINT_TOOLS
@@ -96,9 +95,11 @@ pip install lxml && pip install netaddr && pip install M2Crypto && pip install c
 ##EXPLOIT_TOOLS
 mkdir /opt/Exploit_Tools && cd /opt/Exploit_Tools
 git clone https://github.com/1N3/BruteX
-git clone https://github.com/1N3/Findsploit
+git clone https://github.com/1N3/Findsploit && sh /opt/Exploit_Tools/Findsploit/install.sh
 git clone https://github.com/1N3/PrivEsc
 git clone https://github.com/nccgroup/shocker
+
+
 
 
 #SHELL_TOOLS
@@ -129,7 +130,7 @@ wget https://bitbucket.org/alone/mutator/downloads/mutator_release-v0.2.2-1-gc29
 #WEB_TOOLS
 mkdir /opt/Web_Tools && cd /opt/Web_Tools
 git clone https://github.com/ChrisTruncer/EyeWitness.git
-git clone https://github.com/maurosoria/dirsearch
+git clone https://github.com/maurosoria/dirsearch && ln -s /opt/Web_Tools/dirsearch/dirsearch.py /usr/bin/dirsearch
 
 ##CMS_Tools 
 mkdir /opt/Web_Tools/CMS_Tools && cd /opt/Web_Tools/CMS_Tools
@@ -145,5 +146,15 @@ git clone https://github.com/DanMcInerney/wifijammer
 git clone https://github.com/derv82/wifite2.git
 
 
+printf "\n \n \n ----Completed Downloads----\n \n"
+date
+printf "\n \n Setting Up Some Other Things \n"
+openvas-setup
+
+#download discord
+#download obs-studio
+#download eddie
+#download opera
+#download komodo edit
 
 
