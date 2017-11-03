@@ -1,12 +1,12 @@
 # UPDATE OS
 
 apt-get update && apt-get upgrade
-apt-get install exiftool steghide terminator bleachbit
+apt-get install exiftool steghide terminator bleachbit openvas
 apt-get install gimp audacity libreoffice
 
 
-#Install LXDE
-apt-get install lxde-core lxde kali-defaults kali-root-login desktop-base
+#Install LXDE - if you want.
+# apt-get install lxde-core lxde kali-defaults kali-root-login desktop-base
 
 
 #WORDLISTS
@@ -142,6 +142,7 @@ git clone https://github.com/droope/droopescan
 mkdir /opt/Wireless_Tools && cd /opt/Wireless_Tools
 git clone https://github.com/wi-fi-analyzer/fluxion
 git clone https://github.com/DanMcInerney/wifijammer
+git clone https://github.com/derv82/wifite2.git
 
 
 

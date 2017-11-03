@@ -9,7 +9,7 @@ git clone https://github.com/superkojiman/onetwopunch
 git clone https://github.com/codingo/Reconnoitre
 git clone https://github.com/frizb/Vanquish
 
-cd /opt/Wireless_Tools
-git clone https://github.com/derv82/wifite2.git
+
+
 
 
