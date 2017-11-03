@@ -44,13 +44,17 @@ git clone https://github.com/liftoff/pyminifier
 mkdir /opt/Steganography_Tools && cd /opt/Steganography_Tools
 
 git clone https://github.com/alexadam/img-encode
-git clone https://github.com/abeluck/stegdetect
 
+mkdir /opt/Steganography_Tools/stegdetect && cd /opt/Steganography_Tools/stegdetect && wget http://archive.debian.org/debian/pool/main/s/stegdetect/stegdetect_0.6-3_amd64.deb && dpkg -i stegdetect_0.6-3_amd64.deb && rm stegdetect_0.6-3_amd64.deb && echo "Run stegdetect from cmd line" > Run_It_From_CMD_Line.txt
+
+cd /opt/Steganography_Tools 
 wget http://www.darkside.com.au/snow/snow-20130616.tar.gz && tar xzf snow-20130616.tar.gz && rm snow-20130616.tar.gz && mv snow-20130616 snow
 
 
 mkdir stegsolve && cd stegsolve
 wget http://www.caesum.com/handbook/Stegsolve.jar -O stegsolve.jar && chmod +x stegsolve.jar
+
+
 
 apt-get install stegosuite
 
