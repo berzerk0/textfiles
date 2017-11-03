@@ -156,5 +156,6 @@ openvas-setup
 #download eddie
 #download opera
 #download komodo edit
+# Setup Sakura config file
 
 
