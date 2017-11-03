@@ -1,12 +1,16 @@
 #!/bin/bash
 # UPDATE OS
 
+printf "\n \n \n ----Starting apt-gets----\n \n"
+
 apt-get update && apt-get upgrade
 apt-get install exiftool steghide sakura bleachbit openvas gimp audacity libreoffice stegosuite
 #apt-get install exiftool steghide terminator bleachbit openvas
 #apt-get install gimp audacity libreoffice
 #apt-get install stegosuite
 
+
+printf "\n \n \n ----Completed apt-gets, starting gits----\n \n"
 
 #Install LXDE - if you want.
 # apt-get install lxde-core lxde kali-defaults kali-root-login desktop-base
@@ -146,16 +150,20 @@ git clone https://github.com/DanMcInerney/wifijammer
 git clone https://github.com/derv82/wifite2.git
 
 
-printf "\n \n \n ----Completed Downloads----\n \n"
-date
-printf "\n \n Setting Up Some Other Things \n"
-openvas-setup
+printf "\n \n \n ----Completed gits, downloading with wget and browser----\n \n"
 
-#download discord
+
+cd ~/Downloads
+wget https://discordapp.com/api/download?platform=linux&format=deb && dpkg -i discord*
+
+
+firefox "https://eddie.website/download/?platform=linux&arch=x64&ui=ui&format=debian.deb&version=2.13.6&r=0.9676549577881011"  "https://www.opera.com/computer/thanks?partner=www&par=id%3D42412%26amp;location%3D411&gaprod=opera" "https://www.activestate.com/komodo-ide/downloads/edit" "https://extensions.gnome.org/extension/1112/screenshot-tool/"
+
+
 #download obs-studio
-#download eddie
-#download opera
-#download komodo edit
 # Setup Sakura config file
+
+
+openvas-setup
 
 
