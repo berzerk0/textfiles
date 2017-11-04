@@ -1,20 +1,22 @@
 #!/bin/bash
 # UPDATE OS
 
+echo "What install mode? (power/light)"
+read SETUP_TYPE 
+
 printf "\n \n \n ----Starting apt-gets----\n \n"
 
 apt-get update && apt-get upgrade
 
-echo "What install mode? (power/light)"
-read SETUP_TYPE 
 
 
-if [ $SETUP_TYPE = 'power' ]; then
+
+if [ "$SETUP_TYPE" = 'power' ]; then
 echo "Power Install"
 apt-get install p7zip exiftool steghide terminator bleachbit openvas gimp audacity libreoffice stegosuite terminology
 
 else
-if [ $SETUP_TYPE = 'light' ]; then
+if [ "$SETUP_TYPE" = 'light' ]; then
 
 echo "Light Install "
 apt-get install  p7zip exiftool steghide sakura bleachbit openvas
@@ -167,10 +169,10 @@ git clone https://github.com/DanMcInerney/wifijammer
 git clone https://github.com/derv82/wifite2.git
 
 
-printf "\n \n \n ----Completed gits, showing browser downloads----\n \n"
+#printf "\n \n \n ----Completed gits, showing browser downloads----\n \n"
 
 
-firefox "https://eddie.website/download/?platform=linux&arch=x64&ui=ui&format=debian.deb&version=2.13.6&r=0.9676549577881011"  "https://www.opera.com/computer/thanks?partner=www&par=id%3D42412%26amp;location%3D411&gaprod=opera"  "https://www.activestate.com/komodo-ide/downloads/edit" "https://extensions.gnome.org/extension/1112/screenshot-tool/" "https://discordapp.com/api/download?platform=linux&format=deb" &
+#firefox "https://eddie.website/download/?platform=linux&arch=x64&ui=ui&format=debian.deb&version=2.13.6&r=0.9676549577881011"  "https://www.opera.com/computer/thanks?partner=www&par=id%3D42412%26amp;location%3D411&gaprod=opera"  "https://www.activestate.com/komodo-ide/downloads/edit" "https://extensions.gnome.org/extension/1112/screenshot-tool/" "https://discordapp.com/api/download?platform=linux&format=deb" &
 
 
 #download obs-studio
