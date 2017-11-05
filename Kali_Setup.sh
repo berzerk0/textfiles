@@ -6,20 +6,25 @@ read SETUP_TYPE
 
 printf "\n \n \n ----Starting apt-gets----\n \n"
 
-apt-get update && apt-get upgrade
+
 
 
 
 
 if [ "$SETUP_TYPE" = 'power' ]; then
 echo "Power Install"
-apt-get install p7zip exiftool steghide terminator bleachbit openvas gimp audacity libreoffice stegosuite terminology
+dpkg --add-architecture i386
+apt-get update 
+apt-get install p7zip steghide terminator bleachbit openvas gimp audacity libreoffice stegosuite libc6:i386
+
+
 
 else
 if [ "$SETUP_TYPE" = 'light' ]; then
 
 echo "Light Install "
-apt-get install  p7zip exiftool steghide sakura bleachbit openvas
+apt-get update && apt-get upgrade
+apt-get install  p7zip steghide sakura bleachbit openvas
 
 cd ~/.config/sakura && mv sakura.conf original.conf && wget https://raw.githubusercontent.com/berzerk0/textfiles/master/sakura.conf 
 
