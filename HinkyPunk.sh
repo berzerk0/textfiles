@@ -1,9 +1,7 @@
 #!/bin/sh
 ## HINKYPUNK INFORMATION GATHERING/LISTING SCRIPT
 
-#use WHICH or  if [ ! -f '/bin/PROGRAM' ]; then    to find programs
-#cat /etc/*release* find fedora, debian, etc.
-# browse user home dirs - which users have them?
+
 
 
 cd /dev/shm || exit #move to temporary folder all users can usually access
@@ -11,18 +9,18 @@ clear
 
 
 echo 'HINKYPUNK INFORMATION GATHERING'
-echo 
+printf "\\n"
 echo '------BEGIN HINKYPUNK------'
 
-echo
-echo
+printf "\\n \\n"
 
 echo '------SYSTEM INFORMATION------'
 echo "Hostname: $(uname -n)"
 echo "Kernel: $(uname -r)"
 echo "Architecture: $(uname -m)"
 echo "CPU: $(grep -i 'model name' /proc/cpuinfo | cut -d: -f2 | uniq)"
-echo  
+echo "OS Info: Check /etc/*release*"
+printf "\\n" 
 
 
 
@@ -30,54 +28,65 @@ echo
 echo '------USER INFORMATION------'
 echo "Current User: $(whoami)"
 echo "Your shell is: $(grep "^$(whoami)" /etc/passwd | cut -d: -f7)" 
-echo
-echo "Your path is: $PATH "
-
-echo
-
-echo "Other Users on the System: $(cut -d: -f 1 /etc/passwd | grep -v "$(whoami)" | sort | tr '\n' ' ')"
-echo
+printf "Your path is: $PATH \n"
 
 
-echo "Superusers on this machine are: $(grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1}')"
-echo
 
-echo "Users with /home/ dirs are: $(ls /home/  | sort | tr '\n' ' ')"
-echo 
+printf "\nOther Users on the System:\n$(cut -d: -f 1 /etc/passwd | grep -v "$(whoami)" | sort | tr '\n' ' ') \n"
 
-if ! [ $(id -u) = 0 ];
-then
 
-if [ -d "/home/$(whoami)" ]; then
-echo "$(whoami) has a /home directory"
+
+printf "\nSuperusers on this machine are: $(grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1}') \n"
+
+
+hinkp_homedirs=`ls /home/  | sort | tr '\n' ' ' 2>/dev/null`
+if [ "$hinkp_homedirs" ]; then
+	printf "\nUsers with /home/ dirs are: $(ls /home/  | sort | tr '\n' ' ')\n"
 fi
 
+printf "\n"
 
+if ! [ "$(id -u)" = 0 ]; then #if current user != root
 
-find / -perm -4000 -type f 2>/dev/null | tr ' ' '\n' | sort > ."$(whoami)_UID_files_HINKYPUNK"
-echo "   >>> $(whoami) UID files written to $(pwd)/.$(whoami)_UID_files_HINKYPUNK"
+	#Check if user has home dir
+	if [ -d "/home/$(whoami)" ]; then
+		printf "current user ($(whoami)) has a /home/ directory"
+		printf "\\n"
+	fi
 
-find / -perm -2 -type d 2>/dev/null | tr ' ' '\n' | sort > .world_writable_directories_HINKYPUNK
-echo "   >>> List of World Writeable FOLDERS written to $(pwd)/.world_writeable_DIRS_HINKYPUNK"
+	printf "\\n"
 
-find / ! -path "*/proc/*" -perm -2 -type f -print 2>/dev/null | tr ' ' '\n' | sort > .world_writable_files_HINKYPUNK
-echo "   >>> List of World Writeable FILES (except in /proc/) written to $(pwd)/.world_writeable_FILES_HINKYPUNK"
+	#find user UID files
+	find / -perm -4000 -type f 2>/dev/null | tr ' ' '\n' | sort > ."$(whoami)_UID_files_HINKYPUNK"
+	echo "   >>> $(whoami) UID files written to $(pwd)/.$(whoami)_UID_files_HINKYPUNK"
+
+	#find directories writeable by all users
+	find / -perm -2 -type d 2>/dev/null | tr ' ' '\n' | sort > .world_writeable_directories_HINKYPUNK
+	echo "   >>> List of World Writeable FOLDERS written to $(pwd)/.world_writeable_DIRS_HINKYPUNK"
+
+	#find files writeable by all users
+	find / ! -path "*/proc/*" -perm -2 -type f -print 2>/dev/null | tr ' ' '\n' | sort > .world_writeable_files_HINKYPUNK
+	printf "   >>> List of World Writeable FILES (except in /proc/) written to $(pwd)/.world_writeable_FILES_HINKYPUNK\\n"
+
+	#find hidden files readable by the current user
+	find /home/ -type f -name '.*' '(' -exec test -r '{}' \; ')' -print 2>/dev/null | sort > .hidden_files_HINKYPUNK
+	echo "   >>> List of hidden but readable FILES in /home/ written to $(pwd)/.hidden_files_HINKYPUNK"
+
+	#find hidden directories readable by the current user
+	find /home/ -type d -name '.*' '(' -exec test -r '{}' \; ')' -print 2>/dev/null | sort > .hidden_dirs_HINKYPUNK
+	echo "   >>> List of hidden but readable FOLDERS in /home/ written to $(pwd)/.hidden_dirs_HINKYPUNK"
+
+	printf " \\n If you cannot read the files listed in the two hidden lists, the find command runs as root. \\n\\n"
+
 fi
-
-find /home/ -type f -name '.*' '(' -exec test -r '{}' \; ')' -print 2>/dev/null | sort > .hidden_files_HINKYPUNK
-echo "   >>> List of hidden but readable FILES in /home/ written to $(pwd)/.hidden_files_HINKYPUNK"
-
-find /home/ -type d -name '.*' '(' -exec test -r '{}' \; ')' -print 2>/dev/null | sort > .hidden_dirs_HINKYPUNK
-echo "   >>> List of hidden but readable FOLDERS in /home/ written to $(pwd)/.hidden_dirs_HINKYPUNK"
-echo "If you cannot read the files listed in the two hidden lists, the find command runs as root."
-
 
 #See recent activity
 hinkp_last_a=`last -a 2>/dev/null`
 if [ "$hinkp_last_a" ]; then
-last -a 2>/dev/null >> .recent_activity_HINKYPUNK
-echo "   >>> Recent Activity written to $(pwd)/.recent_activity_HINKYPUNK"
-unset hinkp_nc_exists
+	last -a 2>/dev/null >> .recent_activity_HINKYPUNK
+	echo "   >>> Recent Activity written to $(pwd)/.recent_activity_HINKYPUNK"
+fi
+unset hinkp_last_a
  
 
 
@@ -88,45 +97,73 @@ echo
 #nc
 hinkp_nc_exists=`which nc 2>/dev/null`
 if [ "$hinkp_nc_exists" ]; then
-echo "nc available"
+	echo "nc available"
 else 
-echo "[-] nc not found"
+	echo "[-] nc not found"
 fi
 unset hinkp_nc_exists
 
 #ncat
 hinkp_ncat_exists=`which ncat 2>/dev/null`
 if [ "$hinkp_ncat_exists" ]; then
-echo "ncat available"
+	echo "ncat available"
 else 
-echo "[-] ncat not found"
+	echo "[-] ncat not found"
 fi
 unset hinkp_ncat_exists
 
 #netcat
 hinkp_netcat_exists=`which netcat 2>/dev/null`
 if [ "$hinkp_netcat_exists" ]; then
-echo "netcat available"
+	echo "netcat available"
 else 
-echo "[-] netcat not found"
+	echo "[-] netcat not found"
 fi
 unset hinkp_netcat_exists
 
-#Python
-hinkp_python_ver=`which python 2>/dev/null`
-if [ "$hinkp_python_ver" ]; then
-python -V
+#Python2
+hinkp_python2_ver=`which python >/dev/null`
+if [ "$hinkp_python2_ver" ]; then
+	python -V
 else 
-echo "[-] Python not found"
+	echo "[-] Python 2 not found"
 fi
-unset hinkp_python_ver
+unset hinkp_python2_ver
+
+#Python3
+hinkp_python3_ver=`which python3 2>/dev/null`
+if [ "$hinkp_python3_ver" ]; then
+	python3 -V
+else 
+	echo "[-] Python 3 not found"
+fi
+unset hinkp_python3_ver
 
 #mysql
 hinkp_mysql_ver=`mysql --version 2>/dev/null`
 if [ "$hinkp_mysql_ver" ]; then
-mysql --version
+	mysql --version
+
+	hinkp_mysql_nopass=`mysqladmin -uroot version 2>/dev/null`
+	if [ "$hinkp_mysql_nopass" ]; then
+		echo " !!! mysql root can be logged into without a password !!!"
+
+	else 
+		hinkp_mysql_nopass=`mysqladmin -uroot -proot version 2>/dev/null`
+		if [ "$hinkp_mysql_nopass" ]; then
+			echo " !!! mysql root can be logged into as 'root' with password 'root' !!!"
+		
+		else
+			hinkp_mysql_nopass=`mysqladmin -uroot -pmysqlpass version 2>/dev/null`
+			if [ "$hinkp_mysql_nopass" ]; then
+				echo " !!! mysql root can be logged into as 'root' with password 'mysqlpass' !!!"
+			fi
+		fi
+	fi
+	unset hinkp_mysql_nopass
+
 else 
-echo "[-] mysql not found"
+	echo "[-] mysql not found"
 fi
 unset hinkp_mysql_ver
 
@@ -134,9 +171,9 @@ unset hinkp_mysql_ver
 #check for gcc
 hinkp_gcc_ver=`which gcc`
 if [ "$hinkp_gcc_ver" ]; then
-echo 'gcc available'
+	echo 'gcc available'
 else 
-echo "[-] gcc not found"
+	echo "[-] gcc not found"
 fi
 unset hinkp_gcc_ver
 
@@ -144,9 +181,9 @@ unset hinkp_gcc_ver
 #Perl
 hinkp_perl_ver=`perl -v 2>/dev/null`
 if [ "$hinkp_perl_ver" ]; then
-echo "Perl: $(perl -v | grep -Eo 'v([0-9]\.*)+')"
+	echo "Perl: $(perl -v | grep -Eo 'v([0-9]\.*)+')"
 else 
-echo "[-] Perl not found"
+	echo "[-] Perl not found"
 fi
 unset hinkp_perl_ver
 
@@ -154,21 +191,21 @@ unset hinkp_perl_ver
 #Java
 hinkp_java_ver=`which java 2>/dev/null` 
 if [ "$hinkp_java_ver" ]; then
-echo 'Java available'
-echo '-----'
-java -version
-echo '-----'
-else 
-echo "[-] Java not found"
+	echo "Java available"
+	echo "-----"
+	java -version
+	echo "-----"
+	else 
+	echo "[-] Java not found"
 fi
 unset hinkp_java_ver
 
 #Ruby
 hinkp_ruby_ver=`ruby -v 2>/dev/null`
 if [ "$hinkp_ruby_ver" ]; then
-echo "Ruby: $(ruby -v | cut -d' ' -f2)"
+	echo "Ruby: $(ruby -v | cut -d' ' -f2)"
 else 
-echo "[-] Ruby not found"
+	echo "[-] Ruby not found"
 fi
 unset hinkp_ruby_ver
 echo
@@ -180,41 +217,40 @@ echo
 #Packages
 hinkp_debian_packages=`dpkg -l 2>/dev/null` #debian
 if [ "$hinkp_debian_packages" ]; then
-dpkg -l 2>/dev/null > .installed_pkgs_HINKYPUNK
-echo "  >>> List of (debian) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
-unset hinkp_debian_packages
+	dpkg -l 2>/dev/null > .installed_pkgs_HINKYPUNK
+	echo "  >>> List of (debian) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+	unset hinkp_debian_packages
 
 else
-hinkp_rpm_packages=`rpm -qa 2>/dev/null` #rpm_packages
-if [ "$hinkp_rpm_packages" ]; then
-rpm -qa 2>/dev/null > .installed_pkgs_HINKYPUNK
-echo "  >>> List of (rpm) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
-unset hinkp_rpm_packages
+	hinkp_rpm_packages=`rpm -qa 2>/dev/null` #rpm_packages
+	if [ "$hinkp_rpm_packages" ]; then
+		rpm -qa 2>/dev/null > .installed_pkgs_HINKYPUNK
+		echo "  >>> List of (rpm) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+		unset hinkp_rpm_packages
 
-else
-hinkp_yum_packages=`yum list | grep installed 2>/dev/null` #yum_packages
-if [ "$hinkp_yum_packages" ]; then
-yum list | grep installed 2>/dev/null > .installed_pkgs_HINKYPUNK
-echo "  >>> List of (yum) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
-unset hinkp_yum_packages
+	else
 
-else
-hinkp_pacman_packages=`pacman -Q 2>/dev/null` #pacman_packages
-if [ "$hinkp_pacman_packages" ]; then
-pacman -Q 2>/dev/null > .installed_pkgs_HINKYPUNK
-echo "  >>> List of (pacman) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
-unset hinkp_pacman_packages
+		hinkp_yum_packages=`yum list | grep installed 2>/dev/null` #yum_packages
+		if [ "$hinkp_yum_packages" ]; then
+			yum list | grep installed 2>/dev/null > .installed_pkgs_HINKYPUNK
+			echo "  >>> List of (yum) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+		unset hinkp_yum_packages
 
+		else
+			hinkp_pacman_packages=`pacman -Q 2>/dev/null` #pacman_packages
+			if [ "$hinkp_pacman_packages" ]; then
+				pacman -Q 2>/dev/null > .installed_pkgs_HINKYPUNK
+				echo "  >>> List of (pacman) installed pkgs written to $(pwd)/.installed_pkgs_HINKYPUNK"
+				unset hinkp_pacman_packages
+
+			fi
+		fi
+	fi
 fi
-fi
-fi
-fi
-fi
+
 
 echo
 echo
-echo "This output has also been saved to $(pwd)/.HINKYPUNK_OUTPUT"
-
 
 #echo '------SSH KEYS------'
 # ls /home/*/.ssh/
