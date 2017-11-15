@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# This script just puts all the nmap commands I normally run into one command.
+# Give it a box's nickname and IP (or name in /etc/hosts) and it will:
+
+# 1. Create a ~/CTFs/boxname folder
+# 2. Create a NOTES_boxname.txt in that folder, and open it with gedit.
+# 3. Run an nmap scan on the top 100 ports to find most common ports
+# 4. run -sV on those ports, saving the output
+# 5,6. Repeat the last 2 steps with a full TCP scan
+# 7. run a vulnscan on the found TCP ports.
+
+
 # $1 = machine name
 # $2 machine IP
 
