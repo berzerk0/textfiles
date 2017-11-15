@@ -60,13 +60,13 @@ if ! [ "$(id -u)" = 0 ]; then #if current user != root
 	find / -perm -4000 -type f 2>/dev/null | tr ' ' '\n' | sort > ."$(whoami)_UID_files_HINKYPUNK"
 	echo "   >>> $(whoami) UID files written to $(pwd)/.$(whoami)_UID_files_HINKYPUNK"
 
-	#find directories writeable by all users
-	find / -perm -2 -type d 2>/dev/null | tr ' ' '\n' | sort > .world_writeable_directories_HINKYPUNK
-	echo "   >>> List of World Writeable FOLDERS written to $(pwd)/.world_writeable_DIRS_HINKYPUNK"
+	#find directories writable by all users
+	find / -perm -2 -type d 2>/dev/null | tr ' ' '\n' | sort > .world_writable_directories_HINKYPUNK
+	echo "   >>> List of World Writable FOLDERS written to $(pwd)/.world_writable_DIRS_HINKYPUNK"
 
-	#find files writeable by all users
-	find / ! -path "*/proc/*" -perm -2 -type f -print 2>/dev/null | tr ' ' '\n' | sort > .world_writeable_files_HINKYPUNK
-	printf "   >>> List of World Writeable FILES (except in /proc/) written to $(pwd)/.world_writeable_FILES_HINKYPUNK\\n"
+	#find files writable by all users
+	find / ! -path "*/proc/*" -perm -2 -type f -print 2>/dev/null | tr ' ' '\n' | sort > .world_writable_files_HINKYPUNK
+	printf "   >>> List of World Writable FILES (except in /proc/) written to $(pwd)/.world_writable_FILES_HINKYPUNK\\n"
 
 	#find hidden files readable by the current user
 	find /home/ -type f -name '.*' '(' -exec test -r '{}' \; ')' -print 2>/dev/null | sort > .hidden_files_HINKYPUNK

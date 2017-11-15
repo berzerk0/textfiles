@@ -81,10 +81,18 @@ Save a post request to filename.req and feed it to sqlmap with the -r flag
 wpscan has a bruteforcer 
 	wpscan -u 'https://192.168.56.102:12380/blogblog/' --username elly --wordlist ~/Wordlists/rockyou.txt --disable-tls-checks
 
+wpscan also has a much easier time finding plugins with the -e a flag
+	wpscan -u https://192.168.56.102:12380/blogblog/ -e ap
+	(enumerates all plugins)
+plugins often have exploits on searchsploit
+	
+
 Sometimes nmap doesn't check enough ports. If you get stuck try some manual port declaration
 	nmap -sV -p1-15000 -T4 HOST
 
 tftp can sometimes be used to straight up add files to port 80 - like shells.
 
+if a box has an open mysql port - and you know the login creds, you can access it with
+	mysql -u USER -pPASSWORD -h HOST
 
 
