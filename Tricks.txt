@@ -83,7 +83,8 @@ wpscan has a bruteforcer
 
 Sometimes nmap doesn't check enough ports. If you get stuck try some manual port declaration
 	nmap -sV -p1-15000 -T4 HOST
-	
+
+tftp can sometimes be used to straight up add files to port 80 - like shells.
 
 
 
