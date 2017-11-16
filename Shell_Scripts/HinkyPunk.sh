@@ -80,6 +80,17 @@ if ! [ "$(id -u)" = 0 ]; then #if current user != root
 
 fi
 
+
+
+#See crons
+hinkp_crons=`cat /etc/cron.d/automate 2>/dev/null | grep '\*'`
+if [ "$hinkp_crons" ]; then
+	echo "cron jobs scheduled are..."
+	cat /etc/cron.d/automate 2>/dev/null | grep '\*' | tee .cron_jobs_HINKYPUNK
+	printf "\n"
+fi
+unset hinkp_crons
+
 #See recent activity
 hinkp_last_a=`last -a 2>/dev/null`
 if [ "$hinkp_last_a" ]; then

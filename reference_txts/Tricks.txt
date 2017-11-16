@@ -91,6 +91,7 @@ Sometimes nmap doesn't check enough ports. If you get stuck try some manual port
 	nmap -sV -p1-15000 -T4 HOST
 
 tftp can sometimes be used to straight up add files to port 80 - like shells.
+THIS MAY BE ONLY WHEN UNREALISTICALLY MISCONFIGURED. Like port 80  was on Stapler.
 
 if a box has an open mysql port - and you know the login creds, you can access it with
 	mysql -u USER -pPASSWORD -h HOST
