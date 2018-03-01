@@ -13,6 +13,7 @@
 
 # $1 = machine name
 # $2 machine IP
+# $3 interface
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -20,8 +21,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Display error if not enough arguments given
-if [ $# -ne 2 ]; then
-	printf " ${RED}Usage: ${NC} ./benmap.sh target_nickname target_IP \n"
+if [ $# -ne 3 ]; then
+	printf " ${RED}Usage: ${NC} ./benmap.sh target_nickname target_IP interface\n"
 	exit 1
 fi
 
@@ -56,20 +57,24 @@ printf "${GREEN}FastPorts${NC} found: ${GREEN} $benmap_fastports ${NC} \n \n"
 
 #Announce and run service ID on found fast ports
 printf "Running ${GREEN}FastPort${NC} Service Version ID... \n \n"
-nmap -sV -p"$benmap_fastports" -T4 $2 -oA nmap_$1_fastVersions | grep '\/tcp' 
+nmap -sV -p"$benmap_fastports" -T4 $2 -oG nmap_$1_fastVersions | grep '\/tcp'
 
 
 
 #Announce and run Full TCP Portscan
+#printf "\n\n Scanning ${RED}all TCP Ports${NC} with ${GREEN}masscan...\n Saving found ports to ${RED}masscan_$1_TCPports${NC}\n"
+
 printf "\n\nRunning ${RED}Full TCP${NC} Portscan on $2...\nSaving found ports to ${RED}nmap_$1_TCPports${NC}\n"
 nmap -p- -r -T4 "$2" | grep '\/tcp' | cut -d '/' -f 1 | tr '\n' ',' > "nmap_$1_TCPports"
-benmap_TCPports=$(cat "nmap_$1_TCPports")
+
+
+benmap_TCPports=$(cat "masscan_$1_TCPports")
 printf "${RED}TCP Ports${NC} found: ${RED} $benmap_TCPports ${NC} \n \n"
 
 
 #Announce and run service ID on found full tcp ports
 printf "\nRunning ${RED}TCP Port${NC} Service Version ID... \n"
-nmap -sV -p"$benmap_TCPports" -T4 "$2" -oA nmap_$1_TCPVersions | grep '\/tcp' 
+nmap -sV -p"$benmap_TCPports" -T4 "$2" -oG nmap_$1_TCPVersions | grep '\/tcp'
 
 
 
@@ -81,9 +86,9 @@ nmap -sV -p"$benmap_TCPports" -T4 "$2" -oA nmap_$1_TCPVersions | grep '\/tcp'
 
 
 ##Anounce and run VulnScan on all run ports
-printf "\n\n ${YELLOW}Running TCP Port VulnScan${NC}... \n -oA flag used, saving output to ${YELLOW}nmap_$1_tcpvuln${NC} \n\n"
+printf "\n\n ${YELLOW}Running TCP Port VulnScan${NC}... \n saving output to ${YELLOW}nmap_$1_tcpvuln${NC} \n\n"
 
-nmap -p"$benmap_TCPports" -T4 --script=vuln "$2" -oA "nmap_$1_tcpVuln"
+nmap -p"$benmap_TCPports" -T4 --script=vuln "$2" -oG "nmap_$1_tcpVuln"
 
 
 unset benmap_tcpports
@@ -93,7 +98,3 @@ unset benmap_fastports
 unset RED
 unset NC
 unset GREEN
-
-
-
-
