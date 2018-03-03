@@ -50,8 +50,8 @@ unset benmap_dir
 
 #Announce and run fast portscan (Top 100 ports only)
 printf "Running ${GREEN}Fast${NC} Portscan on $2...\nSaving FastPorts to ${GREEN}nmap_$1_fastports${NC}... \n"
-nmap -F -r -T4 "$2"| grep '\/tcp' | cut -d '/' -f 1 | tr '\n' ',' > "nmap_$1_fastports"
-benmap_fastports=$(cat "nmap_$1_fastports")
+nmap -F -r -T4 "$2"| grep '\/tcp' | cut -d '/' -f 1 | tr '\n' ',' > "benmap_$1_fastports"
+benmap_fastports=$(cat "benmap_$1_fastports")
 printf "${GREEN}FastPorts${NC} found: ${GREEN} $benmap_fastports ${NC} \n \n"
 
 
@@ -65,11 +65,10 @@ nmap -sV -p"$benmap_fastports" -T4 $2 -oG nmap_$1_fastVersions | grep '\/tcp'
 #printf "\n\n Scanning ${RED}all TCP Ports${NC} with ${GREEN}masscan...\n Saving found ports to ${RED}masscan_$1_TCPports${NC}\n"
 
 printf "\n\nRunning ${RED}Full TCP${NC} Portscan on $2...\nSaving found ports to ${RED}nmap_$1_TCPports${NC}\n"
-nmap -p- -r -T4 "$2" | grep '\/tcp' | cut -d '/' -f 1 | tr '\n' ',' > "nmap_$1_TCPports"
+nmap -p- -r -T4 "$2" | grep '\/tcp' | cut -d '/' -f 1 | tr '\n' ',' > "benmap_$1_TCPports"
+benmap_TCPports=$(cat "benmap_$1_TCPports")
 
 
-benmap_TCPports=$(cat "masscan_$1_TCPports")
-printf "${RED}TCP Ports${NC} found: ${RED} $benmap_TCPports ${NC} \n \n"
 
 
 #Announce and run service ID on found full tcp ports
