@@ -1,3 +1,6 @@
+FIRST=path_to_first
+SECOND=path_to_second
+
 count_first=$(wc -l < $FIRST);
 count_second=$(wc -l < $SECOND);
 
