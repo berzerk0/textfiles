@@ -57,7 +57,7 @@ printf "${GREEN}FastPorts${NC} found: ${GREEN} $benmap_fastports ${NC} \n \n"
 
 #Announce and run service ID on found fast ports
 printf "Running ${GREEN}FastPort${NC} Service Version ID... \n \n"
-nmap -sV -p"$benmap_fastports" -T4 $2 -oG nmap_$1_fastVersions | grep '\/tcp'
+nmap -sV -p"$benmap_fastports" -T4 $2 -oA nmap_$1_fastVersions | grep '\/tcp'
 
 
 
@@ -73,7 +73,7 @@ benmap_TCPports=$(cat "benmap_$1_TCPports")
 
 #Announce and run service ID on found full tcp ports
 printf "\nRunning ${RED}TCP Port${NC} Service Version ID... \n"
-nmap -sV -p"$benmap_TCPports" -T4 "$2" -oG nmap_$1_TCPVersions | grep '\/tcp'
+nmap -sV -p"$benmap_TCPports" -T4 "$2" -oA nmap_$1_TCPVersions | grep '\/tcp'
 
 
 
@@ -87,7 +87,7 @@ nmap -sV -p"$benmap_TCPports" -T4 "$2" -oG nmap_$1_TCPVersions | grep '\/tcp'
 ##Anounce and run VulnScan on all run ports
 printf "\n\n ${YELLOW}Running TCP Port VulnScan${NC}... \n saving output to ${YELLOW}nmap_$1_tcpvuln${NC} \n\n"
 
-nmap -p"$benmap_TCPports" -T4 --script=vuln "$2" -oG "nmap_$1_tcpVuln"
+nmap -p"$benmap_TCPports" -T4 --script=vuln "$2" -oA "nmap_$1_tcpVuln"
 
 
 unset benmap_tcpports
