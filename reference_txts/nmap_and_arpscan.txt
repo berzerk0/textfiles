@@ -1,0 +1,218 @@
+--- OBTAIN IP FROM DOMAIN NAME ---
+
+	Using "host"
+
+		host -t a DOMAIN
+		host -t aaaa DOMAIN
+
+
+	Using "traceroute" (sends pings)
+
+		traceroute example.com
+
+	Using --traceroute with "nmap" (-PN does not send pings, assumes host is up)
+
+		sudo nmap -sn --traceroute DOMAIN
+		sudo nmap -PN -sn --traceroute DOMAIN
+
+	Using OSINT
+		dns.google.com
+		https://toolbar.netcraft.com/site_report?url=http://example.com
+		Maltego or recon-ng
+
+
+	Using nmap to get netblocks
+
+		nmap -sn DOMAIN/24 | grep DOMAIN
+
+
+
+-- DISCOVER/VERIFY A HOST WITHOUT ICMP PING --
+
+Using nmap
+
+	nmap TCP SYN pinging: -PS (port 80 default)
+	
+		sudo nmap -sn -PS some_ports DOMAIN
+
+
+	nmap TCP ACK ping: -PA (port 80 default)
+		
+		sudo nmap -sn -PA some_ports DOMAIN
+
+
+	nmap UDP ping: -PU (ports 31,338 default)
+	data length of 32 simulates Windows, data length 56 simulates Linux
+	
+		sudo -sn -PU some_ports --data-length 32 DOMAIN
+
+
+	nmap SCTP INIT ping (port 80 default)
+		
+		sudo nmap -sn -PY some_ports DOMAIN
+
+
+	nmap non-standard pings (not echo, PP = timestamp, PM = address mask)
+	
+		sudo nmap -sn -PP DOMAIN
+		sudo nmap -sn -PM DOMAIN
+
+	
+
+Using telnet to try and connect via TCP via a likely port
+
+	telnet DOMAIN some_port
+	
+
+Using nc to try and connect via TCP via a likely port
+	
+	nc DOMAIN some_port
+
+
+--- ARP-SCAN USAGE ----
+
+Discover hosts on a local network via ARP
+
+		arp-scan -I nic_name 192.168.1.1-192.168.1.255
+		arp-scan -I nic_name -l
+		
+
+
+	Or, do the same with nmap (slower, but better at OUI)
+
+		nmap -e nic_name -sn hosts
+	
+	
+
+ARP Scan hosts from file "ip_list.txt" and save to "scan.pcap"
+	
+		arp-scan -I nic_name -W path/to/pcapfile -f path/to/hostsfile 
+
+	Quickly read the pcap with "tcpdump -r path/to/file"
+
+
+Include padding after packet data, for "short" files only
+
+		arp-scan -I nic_name -A HEXVALUE hosts
+		arp-scan -I nic_name -A $(xxd FILE | cut -d ' ' -f 2-8 | tr -d ' \n')
+
+
+Discover hosts on local network via ARP, but spoof IP and MAC
+	(ARP header shows real MAC address)
+
+		arp-scan -I nic_name -s 12.34.56.78 -S 01:02:03:04:05:06 hosts
+
+
+Determine which host has a given MAC address
+
+		arp-scan -I nic_name -T mac_address hosts
+
+
+Determine which hosts are listening to multicast
+	
+		arp-scan -I nic_name -T 01:00:5E:00:00:00 hosts
+
+Determine which hosts are in promiscuous mode
+		
+		arp-scan -I nic_name -T 01:00:01:02:03:04 hosts
+
+
+--- nmap firewall bypass attempts --
+
+Null, FIN and XMAS scans may bypass Unix-based firewalls. (-sN -sF -sX)
+(-sN != -sn)
+		sudo nmap -sN HOSTS
+		sudo nmap -sF HOSTS
+		sudo nmap -sX HOSTS
+
+
+If host is behind a firewall, scanning it may produce a response "Not Shown: ALL_SCANNED filtered ports"
+
+	ACK Scan may show if ports are filtered or unfiltered.
+
+		sudo nmap -sA -PN  HOST
+
+Some firewalls may trust traffic based solely on the port number. 
+
+	Using a non-standard port may bypass this check.
+
+		sudo nmap -PN -g port_number host
+	
+	If this scan shows a single port, scanning from that port may take advantage of a misconfiguration and bypass the firewall
+
+
+Some firewalls, primarily Unix-based systems have trouble dealing with IP packet fragments. The '-f' flag breaks packets into fragments of 8 bytes or less after the header. '--mtu multiple_of_8' breaks packets into fragments o
+
+		sudo nmap -PN -f host
+
+
+Since some firewalls protect only from outside IPs, it may be possible to bypass a firewall by routing through another machine on its network. Loose options will attempt to find a route through a certain group of hosts. Strict routing requires manual setting of hops
+
+		nmap -PN --ip-options "L 192.168.1.1 192.168.1.32" host
+		nmap -PN --ip-options "S hop1 hop2 hop3..." host
+
+
+		
+
+
+-- Memorable nmap commands--
+
+
+Just show what hosts are to be scanned, but don't scan anything.
+
+		nmap -sL (complicated host definition)
+
+Just traceroute
+
+		nmap -sn -Pn --traceroute HOST
+
+
+Resume a scan interrupted but output to a file (xml works best)
+
+		sudo nmap --resume FILENAME
+
+
+
+Convert nmap .xml to html
+		
+		xsltproc nmap.xml -o nmap.html
+	
+
+
+
+Scan multiple hosts for a certain for a certain open port, only show hosts with that port open, save to greppaple format
+	
+		nmap -Pn -p port_number --open -oG port_numberscan_%D HOSTS
+
+
+
+Scan some TCP and UDP ports
+
+		sudo nmap -sS -sU -pT:21,23,U:53,111 HOST
+
+
+
+Run all safe scripts on top 100 ports save to all formats
+
+		sudo nmap -sS -F -Pn --script safe -oA outfile_%D HOSTS
+
+
+
+Fyodor's Discoverer Supreme:
+
+		sudo nmap -sn -PE -PP -PS21,22,23,25,25,80,113,31339, -PA80,113,443,10042 -PU53,51234 --source-port 53 --data-length 32 HOSTS
+
+
+
+Scan all TCP ports as fast as possible, identify versions, OS and traceroute, run default, safe and vulnerable scripts, save to all formats (good for CTFs)
+
+		
+		nmap -e nic_name -sS -A -p0- --scripts "default or vuln" -oA  seriousscan_%D HOSTS
+
+
+
+
+Ghostscan: Decoy IPs, using slow timing, append random data to packets, randomize host scan order, scan from random port above 51000, don't ping, use SYN scan, output to all formats
+
+
+		sudo nmap -sS -Pn -T0 -g $(shuf -i 50000-65535 -n 1) --randomize-hosts --data-length  $(($RANDOM%32+224)) -D decoy-ip1,decoy-ip2,decoy-ip3,decoy-ip4,decoy-ip4,decoy-ip5,decoy-ip6  -oA ghostscan_%D HOSTS
