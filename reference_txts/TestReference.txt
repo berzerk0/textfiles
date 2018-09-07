@@ -1,0 +1,17 @@
+
+
+--HTTP Options
+
+curl -i --request-target "*" -X OPTIONS [host]
+nmap -Pn -p80 --script http-methods [host]
+
+
+
+--SSL Certificate
+echo | openssl s_client -showcerts -servername [host] -connect [host]:443 2>/dev/null | openssl x509 -inform pem -noout -text
+
+
+
+
+
+
