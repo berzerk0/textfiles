@@ -33,7 +33,7 @@ tlstriad_numOfHosts=$(egrep -v '^\s*$' $1 | wc -l | cut -d ' ' -f 1)
 
 mkdir $tlstriad_thisdir
 
-tlstriad_hosts
+#tlstriad_hosts
 
 for i in $(cat $1 | egrep -v '^\s*$');
 do
