@@ -1,5 +1,0 @@
----- EXAMPLE.COM ---- 
-
-
-HTTP Methods
-   OPTIONS GET HEAD POST

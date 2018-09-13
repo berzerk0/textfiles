@@ -1,5 +1,0 @@
----- JONESTOWN.CO.UK ---- 
-
-
-HTTP Methods
-    Error retrieving OPTIONS - see nmap results
