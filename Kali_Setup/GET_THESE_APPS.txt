@@ -2,4 +2,4 @@ Opera
 VPN
 Discord
 FoxHunt
-Komodo Edit
+Atom
