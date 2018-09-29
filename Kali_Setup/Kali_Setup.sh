@@ -14,11 +14,11 @@ printf "\n \n \n ----Starting apt-gets----\n \n"
 if [ "$SETUP_TYPE" = 'power' ]; then
 echo "Power Install"
 dpkg --add-architecture i386
-apt-get update 
-apt-get install p7zip steghide terminator bleachbit openvas gimp audacity libreoffice stegosuite libc6:i386
+apt-get update -y
+apt-get install p7zip steghide terminator bleachbit openvas gimp audacity libreoffice -y
+apt-get install stegosuite vlc pidgin pidgin-otr deluge  -y
 
-
-
+s
 else
 if [ "$SETUP_TYPE" = 'light' ]; then
 
@@ -77,11 +77,11 @@ git clone https://github.com/alexadam/img-encode
 
 #mkdir /opt/Steganography_Tools/stegdetect && cd /opt/Steganography_Tools/stegdetect && wget http://archive.debian.org/debian/pool/main/s/stegdetect/stegdetect_0.6-3_amd64.deb && dpkg -i stegdetect_0.6-3_amd64.deb && rm stegdetect_0.6-3_amd64.deb && echo "Run stegdetect from cmd line" > Run_It_From_CMD_Line.txt
 
-cd /opt/Steganography_Tools 
+#cd /opt/Steganography_Tools  &&
 #wget http://www.darkside.com.au/snow/snow-20130616.tar.gz && tar xzf snow-20130616.tar.gz && rm snow-20130616.tar.gz && mv snow-20130616 snow
 
 
-mkdir stegsolve && cd stegsolve
+cd /opt/Steganography_Tools  && mkdir stegsolve && cd stegsolve
 wget http://www.caesum.com/handbook/Stegsolve.jar -O stegsolve.jar && chmod +x stegsolve.jar
 
 
@@ -104,19 +104,19 @@ git clone https://github.com/guelfoweb/fbid
 
 ###LinkedIn_Osint
 mkdir /opt/OSINT_Tools/LinkedIn_OSINT && cd /opt/OSINT_Tools/LinkedIn_OSINT
-git clone https://github.com/0x09AL/raven
-git clone https://github.com/mdsecactivebreach/LinkedInt
+#git clone https://github.com/0x09AL/raven
+#git clone https://github.com/mdsecactivebreach/LinkedInt
 
 ###Domain_OSINT
 mkdir /opt/OSINT_Tools/Domain_OSINT && cd /opt/OSINT_Tools/Domain_OSINT
 git clone https://github.com/1N3/Sn1per
-git clone https://github.com/Smaash/snitch
+#git clone https://github.com/Smaash/snitch
 git clone https://github.com/aboul3la/Sublist3r
 
 
-mkdir /opt/OSINT_Tools/spiderfoot && cd /opt/OSINT_Tools/spiderfoot
-wget http://sourceforge.net/projects/spiderfoot/files/spiderfoot-2.3.0-src.tar.gz/download && tar xzvf download
-pip install lxml && pip install netaddr && pip install M2Crypto && pip install cherrypy && pip install mako
+#mkdir /opt/OSINT_Tools/spiderfoot && cd /opt/OSINT_Tools/spiderfoot
+#wget http://sourceforge.net/projects/spiderfoot/files/spiderfoot-2.3.0-src.tar.gz/download && tar xzvf download
+#pip install lxml && pip install netaddr && pip install M2Crypto && pip install cherrypy && pip install mako
  
 
 
