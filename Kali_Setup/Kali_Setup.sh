@@ -13,12 +13,11 @@ printf "\n \n \n ----Starting apt-gets----\n \n"
 
 if [ "$SETUP_TYPE" = 'power' ]; then
 echo "Power Install"
+apt-get update -y && apt-get upgrade && apt-get autoremove -y
 dpkg --add-architecture i386
-apt-get update -y
-apt-get install p7zip steghide terminator bleachbit openvas gimp audacity libreoffice -y
-apt-get install stegosuite vlc pidgin pidgin-otr deluge  -y
+apt-get install p7zip borgbackup terminator bleachbit openvas gimp libreoffice -y
+apt-get install stegosuite steghide vlc pidgin pidgin-otr deluge  -y
 
-s
 else
 if [ "$SETUP_TYPE" = 'light' ]; then
 
@@ -156,7 +155,6 @@ wget https://bitbucket.org/alone/mutator/downloads/mutator_release-v0.2.2-1-gc29
 
 #WEB_TOOLS
 mkdir /opt/Web_Tools && cd /opt/Web_Tools
-c
 git clone https://github.com/maurosoria/dirsearch && ln -s /opt/Web_Tools/dirsearch/dirsearch.py /usr/bin/dirsearch
 
 ##CMS_Tools 
