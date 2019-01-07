@@ -28,7 +28,7 @@ printf "\\n"
 echo '------USER INFORMATION------'
 echo "Current User: $(whoami)"
 echo "Your shell is: $(grep "^$(whoami)" /etc/passwd | cut -d: -f7)"
-printf "Your path is: $PATH \n"
+printf "Your path is: %s \n" "$PATH"
 
 
 
@@ -65,9 +65,15 @@ if ! [ "$(id -u)" = 0 ]; then #if current user != root
 
 	## find SUID binaries
 	gtfoStandardSuid=$(find / -perm -4000 -type f 2>/dev/null | rev | cut -d '/' -f 1 | rev | sort -u)
+	echo $gtfoStandardSuid > ."$(whoami)_UID_files_HINKYPUNK"
+	echo "   >>> $(whoami) UID files written to $(pwd)/.$(whoami)_UID_files_HINKYPUNK"
 
 	## find SUID binaries owned by root
 	gtfoRootSuid=$(find / -uid 0 -perm -4000 -type f 2>/dev/null | rev | cut -d '/' -f 1 | rev | sort -u)
+	if [ "$gtfoRootSuid" ]; then
+		echo $gtfoRootSuid > ."$(whoami)_root_UID_files_HINKYPUNK"
+		echo "   >>> $(whoami) UID files owned by root written to $(pwd)/.$(whoami)_root_UID_files_HINKYPUNK"
+	fi
 
 
 	#print out both standard and array, find matches
@@ -76,14 +82,18 @@ if ! [ "$(id -u)" = 0 ]; then #if current user != root
 	#print out both root and list, find matches
 	gtfoRootResult=$(echo "$gtfoRootSuid" "$gtfoString" | tr ' ' '\n' | sort | uniq -c | sort -n -r | egrep '^\s*2' |  tr -s ' ' | cut -d ' ' -f 3)
 
-
-	echo "The following SUID files, belonging to \"$(whoami)\", are found on GTFOBins:"
-	echo $gtfoStandardResult | tr ' ' '\n' | sed -e 's/^/   /'
-	echo
+	if [ "$gtfoStandardResult" ]; then
+		echo "   >>> The following SUID files, belonging to \"$(whoami)\", are found on GTFOBins:"
+		echo $gtfoStandardResult | tr ' ' '\n' | sed -e 's/^/   /'
+		echo $gtfoStandardResult | tr ' ' '\n' | sed -e 's/^/   /' > ".$(whoami)_gtfoBins_HINKYPUNK"
+		echo "   >>> $(whoami) UID files found on GTFOBins written to $(pwd)/.$(whoami)_gtfoBins_HINKYPUNK"
+	fi
 
 	if [ "$gtfoRootResult" ]; then
-		echo "Of those, the following are owned by root:"
+		echo "   >>> Of those, the following are owned by root:"
 		echo $gtfoRootResult | sed -e 's/^/    /'
+		echo "Owned by root:" >> ".$(whoami)_gtfoBins_HINKYPUNK"
+		echo $gtfoRootResult | sed -e 's/^/    /' >> ".$(whoami)_gtfoBins_HINKYPUNK"
 		echo
 	fi
 
@@ -137,27 +147,27 @@ echo
 #nc
 hinkp_nc_exists=$(which nc 2>/dev/null)
 if [ "$hinkp_nc_exists" ]; then
-	echo "nc available"
+	echo "  nc available"
 else
-	echo "[-] nc not found"
+	echo "  [-] nc not found"
 fi
 unset hinkp_nc_exists
 
 #ncat
 hinkp_ncat_exists=$(which ncat 2>/dev/null)
 if [ "$hinkp_ncat_exists" ]; then
-	echo "ncat available"
+	echo "  ncat available"
 else
-	echo "[-] ncat not found"
+	echo "  [-] ncat not found"
 fi
 unset hinkp_ncat_exists
 
 #netcat
 hinkp_netcat_exists=$(which netcat 2>/dev/null)
 if [ "$hinkp_netcat_exists" ]; then
-	echo "netcat available"
+	echo "  netcat available"
 else
-	echo "[-] netcat not found"
+	echo "  [-] netcat not found"
 fi
 unset hinkp_netcat_exists
 
@@ -166,7 +176,7 @@ hinkp_python2_ver=$(which python >/dev/null)
 if [ "$hinkp_python2_ver" ]; then
 	python -V
 else
-	echo "[-] Python 2 not found"
+	echo "  [-] Python 2 not found"
 fi
 unset hinkp_python2_ver
 
@@ -175,17 +185,18 @@ hinkp_python3_ver=$(which python3 2>/dev/null)
 if [ "$hinkp_python3_ver" ]; then
 	python3 -V
 else
-	echo "[-] Python 3 not found"
+	echo "  [-] Python 3 not found"
 fi
 unset hinkp_python3_ver
 
 #nmap
 hinkp_nmap_ver=$(which nmap 2>/dev/null)
 if [ "$hinkp_nmap_ver" ]; then
-	echo "nmap available"
+	echo "  nmap available"
 	echo "-----"
 	nmap -V
 	echo "-----"
+	echo "nmap versions older than 5.21 have the --interactive flag, and can spawn shells with !sh"
 	else
 	echo "[-] nmap not found"
 fi
@@ -315,7 +326,6 @@ echo
 
 #httpd -v
 
-#find files owned by root, executable by user
 #look for files with "database" in name
 #look for wp files, www/var
 # mail files
