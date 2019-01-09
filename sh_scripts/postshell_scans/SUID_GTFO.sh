@@ -17,19 +17,19 @@ gtfoRootSuid=$(find / -uid 0 -perm -4000 -type f 2>/dev/null | rev | cut -d '/' 
 
 
 #print out both standard and array, find matches
-gtfoStandardResult=$(echo "$gtfoStandardSuid" "$gtfoString" | tr ' ' '\n' | sort | uniq -c | sort -n -r | egrep '^\s*2' |  tr -s ' ' | cut -d ' ' -f 3)
+gtfoStandardResult=$(echo "$gtfoStandardSuid" "$gtfoString" | tr ' ' '\n' | sort | uniq -c | sort -n -r | grep -E '^\s*2' |  tr -s ' ' | cut -d ' ' -f 3)
 
 #print out both root and list, find matches
-gtfoRootResult=$(echo "$gtfoRootSuid" "$gtfoString" | tr ' ' '\n' | sort | uniq -c | sort -n -r | egrep '^\s*2' |  tr -s ' ' | cut -d ' ' -f 3)
+gtfoRootResult=$(echo "$gtfoRootSuid" "$gtfoString" | tr ' ' '\n' | sort | uniq -c | sort -n -r | grep -E '^\s*2' |  tr -s ' ' | cut -d ' ' -f 3)
 
 
 echo "The following SUID files, belonging to \"$(whoami)\", are found on GTFOBins:"
-echo $gtfoStandardResult | tr ' ' '\n' | sed -e 's/^/   /'
+echo "$gtfoStandardResult" | tr ' ' '\n' | sed -e 's/^/   /'
 echo
 
 if [ "$gtfoRootResult" ]; then
 	echo "Of those, the following are owned by root:"
-	echo $gtfoRootResult | sed -e 's/^/    /'
+	echo "$gtfoRootResult" | sed -e 's/^/    /'
 	echo
 fi
 

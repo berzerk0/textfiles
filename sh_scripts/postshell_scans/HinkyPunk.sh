@@ -65,22 +65,22 @@ if ! [ "$(id -u)" = 0 ]; then #if current user != root
 
 	## find SUID binaries
 	gtfoStandardSuid=$(find / -perm -4000 -type f 2>/dev/null | rev | cut -d '/' -f 1 | rev | sort -u)
-	echo $gtfoStandardSuid > ."$(whoami)_UID_files_HINKYPUNK"
+	echo "$gtfoStandardSuid" > ."$(whoami)_UID_files_HINKYPUNK"
 	echo "   >>> $(whoami) UID files written to $(pwd)/.$(whoami)_UID_files_HINKYPUNK"
 
 	## find SUID binaries owned by root
 	gtfoRootSuid=$(find / -uid 0 -perm -4000 -type f 2>/dev/null | rev | cut -d '/' -f 1 | rev | sort -u)
 	if [ "$gtfoRootSuid" ]; then
-		echo $gtfoRootSuid > ."$(whoami)_root_UID_files_HINKYPUNK"
+		echo "$gtfoRootSuid" > ."$(whoami)_root_UID_files_HINKYPUNK"
 		echo "   >>> $(whoami) UID files owned by root written to $(pwd)/.$(whoami)_root_UID_files_HINKYPUNK"
 	fi
 
 
 	#print out both standard and array, find matches
-	gtfoStandardResult=$(echo "$gtfoStandardSuid" "$gtfoString" | tr ' ' '\n' | sort | uniq -c | sort -n -r | egrep '^\s*2' |  tr -s ' ' | cut -d ' ' -f 3)
+	gtfoStandardResult=$(echo "$gtfoStandardSuid" "$gtfoString" | tr ' ' '\n' | sort | uniq -c | sort -n -r | grep -E '^\s*2' |  tr -s ' ' | cut -d ' ' -f 3)
 
 	#print out both root and list, find matches
-	gtfoRootResult=$(echo "$gtfoRootSuid" "$gtfoString" | tr ' ' '\n' | sort | uniq -c | sort -n -r | egrep '^\s*2' |  tr -s ' ' | cut -d ' ' -f 3)
+	gtfoRootResult=$(echo "$gtfoRootSuid" "$gtfoString" | tr ' ' '\n' | sort | uniq -c | sort -n -r | grep -E '^\s*2' |  tr -s ' ' | cut -d ' ' -f 3)
 
 	if [ "$gtfoStandardResult" ]; then
 		echo "   >>> The following SUID files, belonging to \"$(whoami)\", are found on GTFOBins:"
@@ -91,9 +91,9 @@ if ! [ "$(id -u)" = 0 ]; then #if current user != root
 
 	if [ "$gtfoRootResult" ]; then
 		echo "   >>> Of those, the following are owned by root:"
-		echo $gtfoRootResult | sed -e 's/^/    /'
+		echo "$gtfoRootResult" | sed -e 's/^/    /'
 		echo "Owned by root:" >> ".$(whoami)_gtfoBins_HINKYPUNK"
-		echo $gtfoRootResult | sed -e 's/^/    /' >> ".$(whoami)_gtfoBins_HINKYPUNK"
+		echo "$gtfoRootResult" | sed -e 's/^/    /' >> ".$(whoami)_gtfoBins_HINKYPUNK"
 		echo
 	fi
 
