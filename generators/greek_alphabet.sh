@@ -1,4 +1,4 @@
-FIRST=sources/misc/elements.txt
+FIRST=sources/misc/greek.txt
 #SECOND=path_to_second
 
 count_first=$(wc -l < $FIRST);

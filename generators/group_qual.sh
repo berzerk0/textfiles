@@ -13,3 +13,5 @@ second_word=$(head -n $choose_second $SECOND | tail -n 1);
 
 echo "Qual Group: $first_word $second_word"
 
+unset FIRST count_first choose_first first_word
+unset SECOND count_second choose_second second_word

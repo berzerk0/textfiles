@@ -15,3 +15,6 @@ lettwo=$(head -n $choose_lettwo $letter_source | tail -n 1);
 
 echo Cryptonym: $letone$lettwo"-"$word
 
+unset word_source letter_source count word
+unset choose_word choose_letone choose_lettwo
+
