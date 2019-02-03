@@ -1,7 +1,7 @@
 #!/bin/sh
 
-FIRST=path_to_first
-SECOND=path_to_second
+FIRST=sources/parts_of_speech/common_adjectives.txt
+SECOND=sources/parts_of_speech/common_nouns.txt
 
 count_first=$(wc -l < $FIRST);
 count_second=$(wc -l < $SECOND);
