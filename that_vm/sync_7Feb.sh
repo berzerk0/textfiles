@@ -39,3 +39,4 @@ echo "Synched 7 Feb Version at	$(date)" >> "/root/sync_status.txt"
 
 echo "USB 3.0 Controller"
 echo "Change the vmdir alias to '/media/root/THUMBERKO/OSCP-PWK/Share_PWK'"
+echo "https://addons.mozilla.org/en-US/firefox/addon/uaswitcher/?src=search"
