@@ -34,7 +34,7 @@ printf "Your path is: %s \n" "$PATH"
 
 printf "\nOther Users on the System:\n$(cut -d: -f 1 /etc/passwd | grep -v "$(whoami)" | sort | tr '\n' ' ') \n"
 
-
+printf "\nUsers with a login shell:\n $(cat /etc/passwd | egrep '/bin/.*sh\s*$' | cut -d ':' -f 1 | tr '\n' ' ') \n"
 
 printf "\nSuperusers on this machine are: $(grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1}') \n"
 
