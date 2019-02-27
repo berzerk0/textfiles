@@ -1,0 +1,14 @@
+--- Those Notes ---
+
+
+--- TFTP File Transfer to Windows ---
+On Local
+atftpd --daemon --port 69 [FILE ROOT DIR]
+
+On Windows - port cannot be changed
+tftp -i [LOCAL MACHINE IP ADDR] get [FILENAME]
+
+
+--- FTP File Transfer To Windows ---
+Install something like vsftpd
+
