@@ -2,13 +2,66 @@
 
 
 --- TFTP File Transfer to Windows ---
-On Local
+(always runs on port 69, anonymous, no password)
+
+1. On Local
 atftpd --daemon --port 69 [FILE ROOT DIR]
 
-On Windows - port cannot be changed
+2. On Windows 
 tftp -i [LOCAL MACHINE IP ADDR] get [FILENAME]
+
+3. Close when done on local when done
+killall aftpd
 
 
 --- FTP File Transfer To Windows ---
-Install something like vsftpd
+
+1. Ensure vsftpd is installed
+
+2. set /etc/vsftpd.conf to be like https://raw.githubusercontent.com/berzerk0/textfiles/master/reference_txts/anonymous_vsftpd.conf
+	This is anonymous, no password, root in /tmp/ftproot
+	add "listen_port=PORTNUM" as needed
+	FTP Root is /tmp/ftproot in the above link
+
+3. On Local
+systemctl start vsftpd
+
+4. On Remote
+echo open [LOCAL MACHINE IP ADDR] [PORTNUM - DEF 21] > ftpcomms.txt
+echo user anonymous >> ftpcomms.txt
+echo binary >> ftpcomms.txt
+echo get [FILENAME] >> ftpcomms.txt
+echo bye >> ftpcomms.txt
+ftp -vns:ftpcomms.txt
+
+5. Close on local
+systemctl stop vsftpd
+
+
+--- TCPDUMP ----
+- Capture all packets on all interfaces, write to pcap file
+tcpdump -i any -w [FILENAME]
+
+- Capture - TCP traffic on port range
+tcpdump -nvvX -s0 -i [INTERFACE] tcp portrange [START]-[END] -w [FILENAME]
+
+- pcap file - Read (-n does not convert IPs to names)
+tcpdump -r [FILENAME]
+
+- pcap - extract all IP's
+tcpdump -n -r [FILENAME] | cut -d ' ' -f 3 | sort -u | grep -E '[0-9\.]'
+
+- pcap - originating from an IP
+tcpdump -n src host [ORIGIN IP ADDR] -r [FILENAME]
+
+- pcap - sent to a Destination IP
+tcpdump -n dst host [DESTINATION IP ADDR] -r [FILENAME]
+
+- pcap - over a certain port
+tcpdump -n port [PORTNUM] -r [FILENAME]
+
+- pcap - see actual traffic
+tcpdump -nX -r [FILENAME]
+
+
 
