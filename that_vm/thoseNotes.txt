@@ -11,7 +11,7 @@ atftpd --daemon --port 69 [FILE ROOT DIR]
 tftp -i [LOCAL MACHINE IP ADDR] get [FILENAME]
 
 3. Close when done on local when done
-killall aftpd
+killall atftpd
 
 
 --- FTP File Transfer To Windows ---
