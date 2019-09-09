@@ -1,7 +1,27 @@
 #!/usr/bin/python3
 
-import requests, json
+import requests
 #https://index.commoncrawl.org/CC-MAIN-2016-22-index?filter=%3Dstatus%3A200&fl=url%2Cstatus&url=%2A.mwrinfosecurity.com
+
+results = []
+
+def getResult(dataset,targetSite):
+    a = "https://index.commoncrawl.org/"
+    c= "-index?filter=%3Dstatus%3A200&fl=url%2Cstatus&url="
+
+    theURL = (a + dataset + c + targetSite)
+
+    headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\
+     (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299",
+      "Connection": "close",
+      "Upgrade-Insecure-Requests": "1"
+      }
+
+    r = requests.get(theURL, headers=headers)
+    for i in r.text.split("\n"):
+            results.append(i.split(" ")[0])
+
 
 sets = [
     'CC-MAIN-2019-35','CC-MAIN-2019-30','CC-MAIN-2019-26','CC-MAIN-2019-22',
@@ -21,20 +41,9 @@ sets = [
     'CC-MAIN-2014-23','CC-MAIN-2014-15','CC-MAIN-2014-10','CC-MAIN-2013-48',
     'CC-MAIN-2013-20','CC-MAIN-2012','CC-MAIN-2009-2010','CC-MAIN-2008-2009'
         ]
+test_sets = ['CC-MAIN-2016-30','CC-MAIN-2016-26','CC-MAIN-2016-22']
 
-fetch_url_a = "https://index.commoncrawl.org/"
-sourceSet="CC-MAIN-2016-22"
-fetch_url_c= "-index?filter=%3Dstatus%3A200&fl=url%2Cstatus&output=json&url="
-targetSite="*.mwrinfosecurity.com"
+for i in sets:
+    getResult(i,"*.mwrinfosecurity.com")
 
-headers = {
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\
- (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299",
-  "Connection": "close",
-  "Upgrade-Insecure-Requests": "1"
- }
-
-
-
-result=requests.get(fetch_url_a+sourceSet+fetch_url_c+targetSite, headers=headers)
-print(result.json)
+print (set(results))
