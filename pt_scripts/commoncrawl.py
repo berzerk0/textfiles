@@ -1,15 +1,17 @@
 #!/usr/bin/python3
 
-import requests
+import requests, sys
 #https://index.commoncrawl.org/CC-MAIN-2016-22-index?filter=%3Dstatus%3A200&fl=url%2Cstatus&url=%2A.mwrinfosecurity.com
 
 results = []
+
+targetSite = sys.argv[1]
 
 def getResult(dataset,targetSite):
     a = "https://index.commoncrawl.org/"
     c= "-index?filter=%3Dstatus%3A200&fl=url%2Cstatus&url="
 
-    theURL = (a + dataset + c + targetSite)
+    theURL = (a + dataset + c + targetSite + "/*")
 
     headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\
@@ -44,6 +46,17 @@ sets = [
 test_sets = ['CC-MAIN-2016-30','CC-MAIN-2016-26','CC-MAIN-2016-22']
 
 for i in sets:
-    getResult(i,"*.mwrinfosecurity.com")
+#for i in test_sets:
+	getResult(i,targetSite)
+	update = ("Fetching results within {s}".format(s=i))
+	print (update)
 
-print (set(results))
+results = set(results)
+
+if (len(results) == 1) and (list(results)[0] == "No"):
+	print ("No results found for " + targetSite)
+	sys.exit()
+
+for i in results:
+	if i != "No":
+		print (i)
