@@ -1,7 +1,16 @@
 #!/usr/bin/python3
 
 import requests, sys, dns.resolver
-import tldextract
+import tldextract, argparse
+
+def parse_args():
+    # parse the arguments
+    parser = argparse.ArgumentParser(epilog='\tExample: \r\npython ' + sys.argv[0] + " -u example.com")
+    parser.error = parser_error
+    parser._optionals.title = "OPTIONS"
+    parser.add_argument('-u', '--url', help="URL to search for files and directories for", required=True)
+    return parser.parse_args()
+
 
 def resolveTarget(target):
     dnsResolver = dns.resolver.Resolver()
@@ -9,8 +18,8 @@ def resolveTarget(target):
     regDomain = (tldextract.extract(target)).registered_domain
 
     if len(regDomain) < 1:
-        errorMsg = ("{s} not a valid domain".format(s=target))
-        print (errorMsg)
+        errorMsg = ("\"{s}\" not a valid domain".format(s=target))
+        parser_error(errorMsg)
         sys.exit()
 
 
@@ -18,13 +27,9 @@ def resolveTarget(target):
         answers = dnsResolver.query(regDomain,"A")
 
     except:
-        errorMsg = ("{s} not found".format(s=regDomain))
-        print (errorMsg)
+        errorMsg = ("\"{s}\" did not resolve".format(s=regDomain))
+        parser_error(errorMsg)
         sys.exit()
-
-targetSite = sys.argv[1]
-
-resolveTarget(targetSite)
 
 def getCommonCrawlSets():
 
@@ -74,6 +79,17 @@ def getCommonCrawl(targetSite):
 
     return set(cc_results)
 
+def parser_error(errmsg):
+    print("Usage: python " + sys.argv[0] + " -u [URL]")
+    print("Error: " + errmsg)
+    sys.exit()
+
+args = parse_args()
+targetSite = args.url
+
+
+#Ensure that target Site exists
+resolveTarget(targetSite)
 
 
 results = getCommonCrawl(targetSite)

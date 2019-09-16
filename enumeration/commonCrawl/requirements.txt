@@ -1,0 +1,4 @@
+argparse
+dnspython
+requests
+tldextract
