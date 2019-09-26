@@ -68,7 +68,8 @@ findomain -f "$foundDomainFile" -u "$findomain_RawSubFile"
 ## Use this if  no portscanning allowed
 
 python /opt/EyeWitness/EyeWitness.py --web --max-retries 3 \
--d "$(pwd)/Eyewitness_Report" -f "$amass_LiveSubdomainOutput.txt" --prepend-https
+-d "$(pwd)/Eyewitness_Report" -f "$amass_LiveSubdomainOutput.txt" \
+--prepend-https --no-prompt
 
 unset foundDomainFile
 unset amassDomainFile
