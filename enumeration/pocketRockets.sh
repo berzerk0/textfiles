@@ -82,7 +82,7 @@ unset gotChromium
 inScopeDomainFile="./inScope_domains.txt"
 
 if [ ! -f "$inScopeDomainFile" ]; then
-    printf " ${RED}Error: ${NC} ./inScope_Domains.txt does not exist\n"
+    printf " ${RED}Error: ${NC} ./inScope_domains.txt does not exist\n"
 		printf " Please create this file\n\n"
 		exit 1
 fi
@@ -112,13 +112,21 @@ printf "Beginning enumation with ${GREEN}Amass${NC}...\n\n"
 ## to resolve subdomains, and do subdomain bruteforcing
 
 if [ "$2" == "n" ]; then
-	amass enum -brute -norecursive --public-dns -oA "$amass_LiveSubdomainOutput" \
--df "$inScopeDomainFile" -blf "$blacklistFile" -nf "$findomain_RawSubFile"
+
+# 	amass enum -brute -norecursive --public-dns -oA "$amass_LiveSubdomainOutput" \
+# -df "$inScopeDomainFile" -blf "$blacklistFile" -nf "$findomain_RawSubFile"
+
+amass enum -brute -norecursive --public-dns -oA "$amass_LiveSubdomainOutput" \
+-df "$inScopeDomainFile" -nf "$findomain_RawSubFile"
+
 
 else
 
-	amass enum -brute --public-dns -oA "$amass_LiveSubdomainOutput" \
--df "$inScopeDomainFile" -blf "$blacklistFile" -nf "$findomain_RawSubFile"
+# 	amass enum -brute --public-dns -oA "$amass_LiveSubdomainOutput" \
+# -df "$inScopeDomainFile" -blf "$blacklistFile" -nf "$findomain_RawSubFile"
+
+amass enum -brute --public-dns -oA "$amass_LiveSubdomainOutput" \
+-df "$inScopeDomainFile" -nf "$findomain_RawSubFile"
 
 fi
 
