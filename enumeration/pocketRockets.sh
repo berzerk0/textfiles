@@ -44,6 +44,7 @@ fi
 
 ### CHECK FOR BINARIES
 
+#findomain - for fast subdomain enum
 gotFindomain=$(which findomain 2>/dev/null)
 if [ ! "$gotFindomain" ]; then
 	printf " ${RED}Error: ${NC} ${YELLOW}findomain${NC} binary not in PATH\n"
@@ -51,6 +52,7 @@ if [ ! "$gotFindomain" ]; then
 fi
 unset gotFindomain
 
+#amass - for more subdomain enum
 gotAmass=$(which amass 2>/dev/null)
 if [ ! "$gotAmass" ]; then
 	printf " ${RED}Error: ${NC} ${YELLOW}amass${NC}binary not in PATH\n"
@@ -60,6 +62,7 @@ if [ ! "$gotAmass" ]; then
 fi
 unset gotAmass
 
+#aquatone - for scanning and reporting
 gotAquatone=$(which aquatone 2>/dev/null)
 if [ ! "$gotAquatone" ]; then
 	printf " ${RED}Error: ${NC} ${YELLOW}aquatone${NC} binary not in PATH\n"
@@ -69,6 +72,7 @@ if [ ! "$gotAquatone" ]; then
 fi
 unset gotAmass
 
+#chromium - used by aquatone
 gotChromium=$(which chromium 2>/dev/null)
 if [ ! "$gotChromium" ]; then
 	printf " ${RED}Error: ${NC} ${YELLOW}chromium${NC} binary not in PATH\n"
@@ -76,6 +80,17 @@ if [ ! "$gotChromium" ]; then
 	exit 1
 fi
 unset gotChromium
+
+#httpie - used by to fetch pretty requests
+gotHttpie=$(which http 2>/dev/null)
+if [ ! "$gotHttpie" ]; then
+	printf " ${RED}Error: ${NC} ${YELLOW}httpie${NC} binary not in PATH\n"
+	printf " httpie is required for obtaining pretty requests function\n"
+	exit 1
+fi
+unset gotHttpie
+
+
 
 ## CHECK FOR SCOPE FILES
 
@@ -155,12 +170,47 @@ cat "$amass_LiveSubdomainOutput.txt" | aquatone -ports "xlarge"
 
 
 
-#THEN DO THE BIG CURL
-
-# AND THE BIG 404 CURL
-
+# HTTP requests, as well as 404's
+printf "Beginning ${GREEN}GET and 404 Request${NC} gathering...\n\n"
 
 
+if [ ! -f "aquatone_urls.txt" ]; then
+    printf 'aquatone urls file not found\n Request gathering cancelled'
+		exit 1
+fi
+
+if [ ! -d "GET_requests" ]; then
+	mkdir "GET_requests"
+fi
+
+if [ ! -d "404_requests" ]; then
+	mkdir "404_requests"
+fi
+
+#split into two lines because line length limits and scrubbery
+UA_A="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, "
+UA_B="like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+ranString=$(tr -dc 'a-zA-Z\_\-0-9' < /dev/urandom | fold -w10 | head -1)
+
+
+for i in $(cat aquatone_urls.txt);
+do
+
+	getFileName=$(echo -n "$i" | tr -d '/' | tr '.:' '_')
+
+	http --verify=no -v "$i" User-Agent:"$UA_A$UA_B" Referer:"$i" \
+> GET_requests/"$getFileName"
+
+	http --verify=no -v "$i$ranString" User-Agent:"$UA_A$UA_B" Referer:"$i" \
+> 404_requests/"$getFileName-404"
+
+done
+
+
+unset getFileName
+unset UA_A
+unset UA_B
+unset ranString
 unset findomain_RawSubFile
 unset amass_RawSubdomainOutput
 unset amass_LiveSubdomainOutput
