@@ -14,12 +14,12 @@ function usageErrorMessage
 apply to generated files\n \and [Recurse Choice] sets recursive subdomain\
 bruteforcing\n\n"
 
-	printf " ${YELLOW}./pocketRocket ABC recursive ${NC} will create \
+	printf " ${YELLOW}./pocketRocket ABC r ${NC} will create \
 files like ${GREEN}amass_LiveSubdomains_ABC.txt${NC} and search for \
 subdomains recursively, which may take a very long time but is more \
 thorough.\n\n"
 
-printf " ${YELLOW}./pocketRocket XYZ nonrecursive ${NC} will create \
+printf " ${YELLOW}./pocketRocket XYZ n ${NC} will create \
 files like ${GREEN}amass_LiveSubdomains_XYZ.txt${NC} and will not search for \
 subdomains recursively, which is faster but less thorough.\n\n"
 
