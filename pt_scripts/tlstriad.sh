@@ -28,17 +28,17 @@ if [ -d "$tlstriad_thisdir" ]; then
 fi
 
 # Create host directories
-tlstriad_numOfHosts=$(egrep -v '^\s*$' $1 | wc -l | cut -d ' ' -f 1)
+tlstriad_numOfHosts=$(grep -Ev '^\s*$' $1 | wc -l | cut -d ' ' -f 1)
 
 
 mkdir $tlstriad_thisdir
 
 #tlstriad_hosts
 
-for i in $(cat $1 | egrep -v '^\s*$');
+for i in $(cat $1 | grep -Ev '^\s*$');
 do
 		tlstriad_url=$i #URL
-    tlstriad_cleanname=$(echo $i | tr '.' '_') #name for files/dirs (no dits)
+    tlstriad_cleanname=$(echo "$i" | tr '.' '_') #name for files/dirs (no dits)
 		mkdir $tlstriad_thisdir/$tlstriad_cleanname # create host results directory
 done
 
@@ -46,7 +46,7 @@ done
 printf "\nRetrieving TLS certificates from ${GREEN}$tlstriad_numOfHosts${NC} target(s):\n\n"
 
 # Fetch SSL certificates for each
-for i in $(cat $1 | egrep -v '^\s*$');
+for i in $(cat $1 | grep -Ev '^\s*$');
 do
 	tlstriad_url=$i #URL
   tlstriad_cleanname=$(echo $i | tr '.' '_') #name for files/dirs (no dits)
@@ -58,7 +58,7 @@ done
 printf "\n--------Certificate Retrieval Complete---------\n"
 
 
-#for i in $(cat $1 | egrep -v '^\s*$');
+#for i in $(cat $1 | grep -Ev '^\s*$');
 #do
 #	tlstriad_url=$i #URL
 #	tlstriad_cleanname=$(echo $i | tr '.' '_') #name for files/dirs (no dits)
@@ -80,7 +80,7 @@ printf "\n--------Certificate Retrieval Complete---------\n"
 printf "\nBeginning ${GREEN}sslscan${NC} on ${GREEN}$tlstriad_numOfHosts${NC} target(s):\n\n"
 
 # Run sslscan on targets
-for i in $(cat $1 | egrep -v '^\s*$');
+for i in $(cat $1 | grep -Ev '^\s*$');
 do
 	tlstriad_url=$i #URL
 	tlstriad_cleanname=$(echo $i | tr '.' '_') #name for files/dirs (no dits)
@@ -96,14 +96,15 @@ printf "\nBeginning ${GREEN}testssl${NC} on ${GREEN}$tlstriad_numOfHosts${NC} ta
 
 
 #Run testssl on targets, save html and "log" style output
-for i in $(cat $1 | egrep -v '^\s*$');
+for i in $(cat $1 | grep -Ev '^\s*$');
 do
 	tlstriad_url=$i #URL
 	tlstriad_cleanname=$(echo $i | tr '.' '_') #name for files/dirs (no dits)
 	printf "   Running testssl on ${YELLOW}$tlstriad_url${NC}...\n"
 
 	# Run testssl, save html and "log" outputs in host results directory
-	testssl -oL $tlstriad_thisdir/$tlstriad_cleanname/testssl_$tlstriad_cleanname.log -oH $tlstriad_thisdir/$tlstriad_cleanname/testssl_$tlstriad_cleanname.html $tlstriad_url > /dev/null 2>&1
+	 /opt/Web_Tools/testssl.sh/testssl.sh -oL $tlstriad_thisdir/$tlstriad_cleanname/testssl_$tlstriad_cleanname.log -oH $tlstriad_thisdir/$tlstriad_cleanname/testssl_$tlstriad_cleanname.html $tlstriad_url > /dev/null 2>&1
+	#/opt/Web_Tools/testssl.sh/testssl.sh -oL $tlstriad_thisdir/$tlstriad_cleanname/testssl_$tlstriad_cleanname.log -oH $tlstriad_thisdir/$tlstriad_cleanname/testssl_$tlstriad_cleanname.html $tlstriad_url
 done
 
 printf "\n--------testssl scans Complete---------\n"

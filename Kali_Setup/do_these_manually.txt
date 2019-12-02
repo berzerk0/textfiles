@@ -1,0 +1,57 @@
+###THIS IS NOT A SCRIPT ITSELF, IT CONTAINS OTHER THINGS
+
+## add to /etc/rc.local, make rc.local executable
+
+#!/bin/sh
+
+## Mount shared folders on startup
+## this is taken from "/usr/local/sbin/mount-shared-folders"
+
+vmware-hgfsclient | while read folder; do
+  vmwpath="/mnt/hgfs/${folder}"
+  echo "[i] Mounting ${folder}   (${vmwpath})"
+  sudo mkdir -p "${vmwpath}"
+  sudo umount -f "${vmwpath}" 2>/dev/null
+  sudo vmhgfs-fuse -o allow_other -o auto_unmount ".host:/${folder}" "${vmwpath}"
+done
+sleep 2s
+
+
+background
+https://wallhaven.cc/w/nz96ov
+
+GET THE BINARIES FOR
+
+https://github.com/michenriksen/aquatone/releases
+https://github.com/Edu4rdSHL/findomain/releases/latest/download/findomain-linux
+https://github.com/OWASP/Amass/releases
+
+https://www.jython.org/download
+https://www.tenable.com/downloads/nessus
+https://gchq.github.io/CyberChef/
+
+Burp Extensions:
+Cookie Decryptor
+Copy as Python Requests
+Hackvertor
+Identity Crisis
+JSON Beautifier
+Meth0dMan
+Reflected Parameters
+Retire.js
+Software Version Reporter
+
+
+Firefox Setup:
+https://addons.mozilla.org/en-US/firefox/addon/foxyproxy-standard/
+https://addons.mozilla.org/en-US/firefox/addon/cookiebro/
+https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher/
+
+Foxyproxy
+Blue, L80, 127.0.0.1:8080
+Green, L81, 127.0.0.1:8081 
+
+
+
+
+
