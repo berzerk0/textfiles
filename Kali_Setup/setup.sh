@@ -3,7 +3,7 @@
 ## MUST BE RUN IN HOME DIRECTORY
 
 apt-get update -y && apt-get upgrade -y && apt-get autoremove
-apt-get install p7zip sakura ncat shellcheck
+apt-get install p7zip sakura ncat shellcheck python-pip
 
 # Get EICAR test file
 if [ ! -d "$HOME/eicar" ]; then
@@ -139,6 +139,10 @@ cd /opt/Web_Tools
 git clone https://github.com/maurosoria/dirsearch && ln -s /opt/Web_Tools/dirsearch/dirsearch.py /usr/bin/dirsearch
 
 git clone --depth 1 https://github.com/drwetter/testssl.sh.git
+
+pip install --upgrade setuptools
+pip install --upgrade sslyze
+
 cd $HOME
 
 #### Obfuscation Tools
