@@ -9,6 +9,7 @@
 if [ $# -ne 1 ]; then
 	echo "Usage: ./domains.sh 'Output Name'"
   echo "Where 'Output Name' is a suffix you want to apply to generated files"
+	echo "Ensure that a file called 'starter_domains.txt' is present"
 	exit 1
 fi
 
@@ -33,7 +34,7 @@ fi
 
 ## check to see if amass binary is in path
 ## amass
-gotAmass=$(which amass 2>/dev/null)
+gotAmass=$(command -v amass 2>/dev/null)
 if [ ! "$gotAmass" ]; then
 	printf " [-] Error: amass binary not in PATH\n"
 	printf " Using the precompiled Amass binary from GitHub has been more \
@@ -96,11 +97,8 @@ sort -u "$foundDomainFile" > tmp && mv tmp "$foundDomainFile"
 
 
 printf "Found %s domains\n" "$(wc -l "$foundDomainFile" | cut -d ' ' -f 1)"
-printf "Note that these domains have not been verified."
+printf "Note that these domains have not been verified. \n\n"
 
 
-unset vDNS_file
+unset amassDomainErrorLog amassDomainLog foundDomainFile starterFile vDNS_file
 unset vDNS_flag
-unset foundDomainFile
-unset amassDomainLog
-unset amassDomainErrorLog

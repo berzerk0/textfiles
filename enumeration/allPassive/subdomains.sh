@@ -7,12 +7,14 @@
 if [ $# -ne 1 ]; then
 	echo "Usage: ./subdomains.sh 'Output Name'"
   echo "Where 'Output Name' is a suffix you want to apply to generated files"
+	printf "You may want to include a file of previously identified domains \
+called 'found_Domains_[OUTPUT_NAME].txt' \n"
 	exit 1
 fi
 
 
 #findomain - for fast subdomain enum
-gotFindomain=$(which findomain 2>/dev/null)
+gotFindomain=$(command -v findomain 2>/dev/null)
 if [ ! "$gotFindomain" ]; then
 	printf "[-] Error: findomain binary not in PATH\n"
 	exit 1
@@ -20,7 +22,7 @@ fi
 unset gotFindomain
 
 #amass - for more subdomain enum
-gotAmass=$(which amass 2>/dev/null)
+gotAmass=$(command -v amass 2>/dev/null)
 if [ ! "$gotAmass" ]; then
 	printf " [-] Error: amass binary not in PATH\n"
 	printf " Using the precompiled Amass binary from GitHub has been more \
@@ -105,3 +107,6 @@ printf "Found %s unverified subdomains\n" \
 
 printf "And %s verified subdomains\n" \
 "$(wc -l "$amass_LiveSubdomainOutput.txt" | cut -d ' ' -f 1)"
+
+unset amass_LiveSubdomainOutput amass_RawSubdomainOutput findomainFlag
+unset findomain_RawSubFile foundDomainFile
