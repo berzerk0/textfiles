@@ -47,7 +47,6 @@ cj_p4="</iframe>"
 
 #assemble (in a bootleg way) the iframe line and print it to the file
 printf "%s<br><br>%s%s%s\n%s\n%s" "$cjpage_url" "$cj_p1" "$cjpage_url" "$cj_p2" "$cj_p3" "$cj_p4"| tr -d '\\' >> "$cjpage_filename"
-printf "%s<br><br>%s%s%s\n%s\n%s" "$cjpage_url" "$cj_p1" "$cjpage_url" "$cj_p2" "$cj_p3" "$cj_p4"| tr -d '\\' >> "$cjpage_filename"
 
 #print the footer to the file
 printf "\n\n</body>\n</html>\n" >> "$cjpage_filename"
