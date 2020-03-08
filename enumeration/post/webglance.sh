@@ -13,9 +13,8 @@ Where 'Output Name' is a suffix you want to apply to generated files"
 fi
 
 
-# amass - for more subdomain enum
-# this script used with Amass 3.4.4
-# https://github.com/OWASP/Amass
+## is the EyeWitness binary present?
+##
 gotEyeWitness=$(command -v eyewitness 2>/dev/null)
 if [ ! "$gotEyeWitness" ]; then
 	printf " [-] Error: EyeWitness binary not in PATH\n \
@@ -45,13 +44,12 @@ if [ -d "$eyewitnessDir" ]; then
 exit 1
 fi
 
-## Eyewitness as an alternative, worst case scenario we get "unable to screenshot"
+## Eyewitness worst case scenario we get "unable to screenshot"
 ## Use this if no portscanning allowed
-
 eyewitness --web --max-retries 3 -d "$eyewitnessDir" \
 -f "$amass_ResolvedSubdomainOutput" --prepend-https --no-prompt
 
-
+## open the html report
 firefox "$eyewitnessDir/report.html" &
 
 unset amass_RawSubdomainOutput eyewitnessDir
