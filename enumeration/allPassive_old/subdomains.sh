@@ -62,11 +62,27 @@ if [ "$findomainFlag" == "yes" ]; then
 
   findomain -f "$foundDomainFile" -u "$findomain_RawSubFile"
 
+	if [ -s "$findomain_RawSubFile" ]
+	then
 
-  printf "\n [+] findomain identified %s domains \n\n" \
-  "$(wc -l "$findomain_RawSubFile" | cut -d ' ' -f 1)"
+		printf "\n [+] findomain identified %s domains \n\n" \
+	  "$(wc -l "$findomain_RawSubFile" | cut -d ' ' -f 1)"
 
-  printf "\n [+] Passively enumerating subdomains with Amass... \n"
+
+	        # do something as file has data
+	else
+		printf "\n [+] findomain identified 0 domains \n\n"
+		findomainFlag="no"
+
+	fi
+
+fi
+
+
+if [ "$findomainFlag" == "yes" ]; then
+
+	printf "\n [+] Passively enumerating subdomains with Amass... \n"
+	printf "[+] Brute forcing and DNS resolution will NOT be performed... \n"
 
   ## using found domains, use Amass to find more subdomains
   ## include those already found by findomain
@@ -75,15 +91,16 @@ if [ "$findomainFlag" == "yes" ]; then
   amass enum -passive -oA "$amass_RawSubdomainOutput" -df "$foundDomainFile" \
   -nf "$findomain_RawSubFile"
 
-# if user opts not to use findomain
+# if user opts not to use findomain, or it doesn't find anything
 else
   echo -n "" > "$findomain_RawSubFile"
-	printf "User opted not to use findomain\n"
+	printf " [+] User opted not to use findomain, or it did not find anything \n"
 
-  printf "\n [+] Passively enumerating subdomains with Amass... \n"
+	printf "\n [+] Passively enumerating subdomains with Amass... \n"
+	printf "[+] Brute forcing and DNS resolution will NOT be performed... \n"
 
   ## using found domains, use Amass to find more subdomains
-  ## include those already found by findomain
+  ## do NOT include those already found by findomain
   ## this step does not include brute forcing subdomains
   ## Use this when going purely passive
   amass enum -passive -oA "$amass_RawSubdomainOutput" -df "$foundDomainFile"
@@ -92,21 +109,27 @@ fi
 
 
 printf "\n [+] Passively identified %s unverified subdomains \n\n" \
-"$(wc -l "$amass_RawSubdomainOutput" | cut -d ' ' -f 1)"
-
-
-printf " [+] Performing DNS grinding to find/verify subdomains with Amass... \n"
-
-## Using the passively enumerated subdomains, use amass AGAIN
-## to resolve subdomains, and do subdomain bruteforcing
-amass enum -brute --public-dns -oA "$amass_LiveSubdomainOutput" \
--df "$foundDomainFile" -nf "$amass_RawSubdomainOutput.txt"
-
-printf "Found %s unverified subdomains\n" \
 "$(wc -l "$amass_RawSubdomainOutput.txt" | cut -d ' ' -f 1)"
 
-printf "And %s verified subdomains\n" \
-"$(wc -l "$amass_LiveSubdomainOutput.txt" | cut -d ' ' -f 1)"
 
-unset amass_LiveSubdomainOutput amass_RawSubdomainOutput findomainFlag
-unset findomain_RawSubFile foundDomainFile
+## If desired, amass can be run again to perform subdomain bruteforcing
+## and resolve the results found in the previous step
+
+
+#printf " [+] Performing DNS grinding to find/verify subdomains with Amass... \n"
+
+
+# ## Using the passively enumerated subdomains, use amass AGAIN
+# ## to resolve subdomains, and do subdomain bruteforcing
+# amass enum -brute --public-dns -oA "$amass_LiveSubdomainOutput" \
+# -df "$foundDomainFile" -nf "$amass_RawSubdomainOutput.txt"
+#
+# printf "Found %s unverified subdomains\n" \
+# "$(wc -l "$amass_RawSubdomainOutput.txt" | cut -d ' ' -f 1)"
+#
+# printf "And %s verified subdomains\n" \
+# "$(wc -l "$amass_LiveSubdomainOutput.txt" | cut -d ' ' -f 1)"
+
+
+unset amass_RawSubdomainOutput findomainFlag findomain_RawSubFile
+unset foundDomainFile amass_LiveSubdomainOutput
