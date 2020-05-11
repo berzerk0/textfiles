@@ -40,7 +40,7 @@ searchMe = []
 with open(bigFile, "r") as ins:
     for line in ins:
 
-        val = (line.rstrip()).replace(".","\.") + "\\s*$"
+        val = "\.*" + (line.rstrip()).replace(".","\.") + "\\s*$"
         searchMe.append(val)
 
 
@@ -49,6 +49,6 @@ grepMe= '|'.join(searchMe[:])
 #yes this is privescy
 command= ("grep -iE" + choice +"  \'" + grepMe + "\' " + littleFile)
 
-##print (command)
+#print (command)
 
 os.system(command)

@@ -40,7 +40,7 @@ searchMe = []
 with open(bigFile, "r") as ins:
     for line in ins:
 
-        val = ("CNAME .*" + (line.rstrip()).replace(".","\.") + "\s*$")
+        val = ("CNAME .*" + (line.rstrip()).replace(".","\.") + "\.*\s*$")
         searchMe.append(val)
 
 
@@ -50,6 +50,7 @@ grepMe= '|'.join(searchMe[:])
 command= ("grep -iE" + choice +"  \'" + grepMe + "\' " + littleFile)
 
 
-##print (command)
+#print (command)
 
 os.system(command)
+

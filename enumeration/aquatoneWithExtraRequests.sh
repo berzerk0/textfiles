@@ -7,6 +7,7 @@ NC='\033[0m'
 
 
 #aquatone - for scanning and reporting
+# https://github.com/michenriksen/aquatone
 gotAquatone=$(command -v aquatone 2>/dev/null)
 if [ ! "$gotAquatone" ]; then
 	printf " ${RED}Error: ${NC} ${YELLOW}aquatone${NC} binary not in PATH\n"
@@ -26,10 +27,11 @@ fi
 unset gotChromium
 
 #httpie - used by to fetch pretty requests
+# from kali, apt-get install http
 gotHttpie=$(command -v http 2>/dev/null)
 if [ ! "$gotHttpie" ]; then
 	printf " ${RED}Error: ${NC} ${YELLOW}httpie${NC} binary not in PATH\n"
-	printf " httpie is required for obtaining pretty requests function\n"
+	printf " httpie is required for obtaining pretty requests functionality\n"
 	exit 1
 fi
 unset gotHttpie
@@ -62,7 +64,7 @@ printf "Beginning ${GREEN}aquatone${NC} scan...\n\n"
 cat "$hostsFile" | aquatone -ports "xlarge"
 
 
-# HTTP requests, as well as 404's
+# HTTP requests, as well as 404's and noHosts
 printf "Beginning ${GREEN}GET, 404 Request, and no Host Header ${NC} \
 gathering...\n\n"
 
@@ -108,10 +110,7 @@ do
 done
 
 
-unset getFileName
-unset UA_A
-unset UA_B
-unset ranString
+unset getFileName UA_A UA_B ranString
 
 
 
