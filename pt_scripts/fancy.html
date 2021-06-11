@@ -1,0 +1,61 @@
+<html>
+   <head>
+     <title>Clickjack test page</title>
+     <style type="text/css"><!-- 
+            *{ 
+                margin:0; 
+                padding:0;
+            }
+            body {  
+                background:#ffffff;
+            }
+            .button
+            {
+                position: sticky;
+                padding:5px;
+                background:#6699CC;
+                left:1100px;
+                top: 100px;
+                width:40px;
+                border: 1px solid #336699;
+            }
+            #content {
+                position: sticky;
+                width: 500px;
+                height: 500px;
+                margin-top: 75px ;
+                margin-left: 775px;
+            }
+            #clickjacking
+            { 
+                 position: absolute; 
+                left: 0px; 
+                top: 60px; 
+                filter: alpha(opacity=0); 
+                opacity: .1
+            } 
+        //--></style>
+   </head>
+<body>
+<h1>Clickjacking Test Page</h1>
+<br>
+https://example.com
+<br>
+<br>
+<br>
+
+
+           <div id="content">
+            <h1>Click here for prize!</h1>
+            <form action="">
+                <input type="submit" class="button" value="Win!">
+            </form>
+        </div>
+
+
+          <iframe id="clickjacking" src="https://example.com" width="750" height="750" 
+sandbox="allow-forms allow-popups allow-pointer-lock allow-same-origin allow-scripts">
+</iframe>
+
+   </body>
+</html>

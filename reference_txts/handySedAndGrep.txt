@@ -1,0 +1,6 @@
+---Put N spaces between every character (N = 1, etc)
+	sed 's/.\{N\}/& /g'
+
+
+--- Letter Frequency Analysis of a text file (letters only)
+	cat file.txt| tr '[A-Z]' '[a-z]' | sed 's/.\{1\}/& /g' | tr ' ' '\n' | grep -E [a-z] | sort | uniq -c | sort -nr
