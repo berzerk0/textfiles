@@ -88,7 +88,7 @@ do
 	printf "   Running sslyze on ${YELLOW}%s${NC}...\n" "$tlstriad_url"
 
 
-	sslyze --regular "$tlstriad_url" > "$tlstriad_thisdir"/"$tlstriad_cleanname"/yze_sslyze_"$tlstriad_cleanname".txt
+	sslyze "$tlstriad_url" > "$tlstriad_thisdir"/"$tlstriad_cleanname"/yze_sslyze_"$tlstriad_cleanname".txt
 
 done
 
