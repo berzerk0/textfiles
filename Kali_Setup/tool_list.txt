@@ -1,0 +1,45 @@
+# In no particular order
+
+Cyberchef
+gobuster
+
+gau
+gowitness
+
+
+https://github.com/danielmiessler/SecLists
+https://github.com/swisskyrepo/PayloadsAllTheThings
+https://github.com/fuzzdb-project/fuzzdb
+
+
+
+
+BURP Extensions
+========
+Hackvertor
+Turbo Intruder
+HTTP Request Smuggler
+Reflected Parameters
+Retire.js
+Software Vulnerability Scanner
+Software Version Reporter
+Error Message Checks
+Meth0dMan
+
+mdbook
+zettlr
+
+p7zip
+vlc
+chromium
+terminator
+flameshot
+shellcheck
+libreoffice
+httpie
+httprobe
+massdns
+sublime-text
+tmux
+alacritty
+golang-go
