@@ -9,5 +9,5 @@ apt-get update
 apt-get upgrade
 
 #apt install
-apt-get install p7zip vlc chromium terminator flameshot shellcheck libreoffice httpie httprobe massdns sublime-text tmux alacritty golang-go
+apt-get install p7zip vlc chromium terminator flameshot shellcheck libreoffice httpie httprobe massdns sublime-text tmux alacritty golang-go gobuster pup
 apt-get autoremove

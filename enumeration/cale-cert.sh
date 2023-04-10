@@ -16,4 +16,7 @@ if [ ! "$gotPup" ]; then
 fi
 unset gotPup
 
-curl "https://crt.sh/?q=%25.$1" -s | pup 'tr tr td text{}' | grep "$1" | sort -u
+# old version (before April 2023), required *.DOMAIN.TLD
+#curl "https://crt.sh/?q=%25.$1" -s | pup 'tr tr td text{}' | grep "$1" | sort -u
+
+curl "https://crt.sh/?q=$1" -s | pup 'tr tr td text{}' | grep "$1" | sort -u

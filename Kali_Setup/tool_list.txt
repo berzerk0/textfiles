@@ -1,10 +1,10 @@
 # In no particular order
 
 Cyberchef
-gobuster
-
 gau
 gowitness
+findomain
+owasp amass
 
 
 https://github.com/danielmiessler/SecLists
@@ -14,8 +14,10 @@ https://github.com/fuzzdb-project/fuzzdb
 
 
 
-BURP Extensions
-========
+
+
+#BURP Extensions
+
 Hackvertor
 Turbo Intruder
 HTTP Request Smuggler
@@ -29,6 +31,7 @@ Meth0dMan
 mdbook
 zettlr
 
+# apt
 p7zip
 vlc
 chromium
@@ -43,3 +46,5 @@ sublime-text
 tmux
 alacritty
 golang-go
+gobuster
+pup

@@ -14,7 +14,7 @@ fi
 
 #findomain - for fast subdomain enum
 # https://github.com/Edu4rdSHL/findomain
-gotFindomain=$(command -v findomain-linux 2>/dev/null)
+gotFindomain=$(command -v findomain 2>/dev/null)
 if [ ! "$gotFindomain" ]; then
 	printf "[-] Error: findomain binary not in PATH\n\n"
 	exit 1
@@ -93,7 +93,7 @@ if [ "$findomainFlag" == "yes" ]; then
   printf " [+] Running findomain for %s domain(s)... \n" \
   "$(wc -l "$domainFile" | cut -d ' ' -f 1)"
 
-  findomain-linux -f "$domainFile" -u "$findomain_RawSubFile"
+  findomain -f "$domainFile" -u "$findomain_RawSubFile"
 
 	if [ -s "$findomain_RawSubFile" ]
 	then
