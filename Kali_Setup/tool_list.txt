@@ -4,7 +4,7 @@ Cyberchef
 gau
 gowitness
 findomain
-owasp amass
+owasp amass (COMES WITH KALI NOW)
 
 
 https://github.com/danielmiessler/SecLists

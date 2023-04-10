@@ -7,12 +7,11 @@
 #top level
 cd /opt/
 git clone https://github.com/gchq/CyberChef
-#go install github.com/ericchiang/pup@latest - APT
 git clone https://github.com/zmap/zdns.git
 cd zdns
 go build
 cd ..
-#go install github.com/OJ/gobuster/v3@latest APT
+
 
 
 
@@ -27,7 +26,6 @@ git clone https://github.com/MrH0wl/Cloudmare.git
 git clone https://github.com/punk-security/dnsReaper
 go install github.com/sensepost/gowitness@latest
 #findomain - do manually
-# amass - do manually
 # trufflehog - do manullay
 
 # payloads and strings
