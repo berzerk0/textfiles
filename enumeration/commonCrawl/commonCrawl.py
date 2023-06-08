@@ -24,7 +24,10 @@ def resolveTarget(target):
 
 
     try:
-        answers = dnsResolver.query(regDomain,"A")
+        # older version
+        # answers = dnsResolver.query(regDomain,"A")
+        
+        answers = dnsResolver.resolve(regDomain,"A")
 
     except:
         errorMsg = ("\"{s}\" did not resolve".format(s=regDomain))

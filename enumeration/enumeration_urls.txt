@@ -1,6 +1,0 @@
-SUBDOMAINS
-
-hackertarget
-  http://api.hackertarget.com/hostsearch/?q=DOMAIN
-
-CHECK AMASS (or just use it)

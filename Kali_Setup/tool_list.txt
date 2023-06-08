@@ -1,16 +1,29 @@
 # In no particular order
 
 Cyberchef
-gau
+gau https://github.com/lc/gau
 gowitness
-findomain
+findomain https://github.com/Findomain/Findomain
 owasp amass (COMES WITH KALI NOW)
+waybackurls https://github.com/tomnomnom/waybackurls
 
 
 https://github.com/danielmiessler/SecLists
 https://github.com/swisskyrepo/PayloadsAllTheThings
 https://github.com/fuzzdb-project/fuzzdb
 
+
+https://github.com/trufflesecurity/trufflehog
+
+https://github.com/gpakosz/.tmux
+https://github.com/ffuf/pencode
+
+go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+
+go install github.com/tomnomnom/waybackurls@latest
 
 
 
@@ -27,6 +40,7 @@ Software Vulnerability Scanner
 Software Version Reporter
 Error Message Checks
 Meth0dMan
+Stepper
 
 mdbook
 zettlr
@@ -48,3 +62,7 @@ alacritty
 golang-go
 gobuster
 pup
+gh
+vsftpd
+jq
+
