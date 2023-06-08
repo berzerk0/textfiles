@@ -2,7 +2,7 @@
 
 Cyberchef
 gau https://github.com/lc/gau
-gowitness
+gowitness - REPLACED BY NUCLEI!?
 findomain https://github.com/Findomain/Findomain
 owasp amass (COMES WITH KALI NOW)
 waybackurls https://github.com/tomnomnom/waybackurls
@@ -60,9 +60,9 @@ sublime-text
 tmux
 alacritty
 golang-go
-gobuster
 pup
 gh
 vsftpd
 jq
+fzf
 
