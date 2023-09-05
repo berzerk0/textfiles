@@ -11,6 +11,7 @@ waybackurls https://github.com/tomnomnom/waybackurls
 https://github.com/danielmiessler/SecLists
 https://github.com/swisskyrepo/PayloadsAllTheThings
 https://github.com/fuzzdb-project/fuzzdb
+https://github.com/insidetrust/statistically-likely-usernames
 
 
 https://github.com/trufflesecurity/trufflehog
@@ -26,8 +27,13 @@ go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 go install github.com/tomnomnom/waybackurls@latest
 
 
+https://github.com/dafthack/DomainPasswordSpray
+https://github.com/NetSPI/PowerUpSQL
+https://github.com/ropnop/kerbrute
 
+https://portswigger.net/burp/releases/professional/latest
 
+crackmapexec https://www.crackmapexec.wiki/getting-started/installation/installation-on-unix
 
 #BURP Extensions
 
@@ -42,8 +48,8 @@ Error Message Checks
 Meth0dMan
 Stepper
 
-mdbook
-zettlr
+mdbook https://github.com/rust-lang/mdBook
+zettlr https://www.zettlr.com/download
 
 # apt
 p7zip
@@ -65,4 +71,10 @@ gh
 vsftpd
 jq
 fzf
+xclip
 
+# potentials
+zgrab?
+
+
+alias now="date '+%e%B%Y_%H%M' | tr -d ' '"

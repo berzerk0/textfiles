@@ -1,5 +1,13 @@
 #!/bin/sh
 
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+ORANGE='\033[0;33m'
+NC='\033[0m'
+
+
 # Display error if not enough arguments given
 if [ $# -ne 1 ]; then
 	printf "\n ${RED}Error: ${NC} No domain provided \n\n"
@@ -34,8 +42,17 @@ unset gotFindomain
 
 singleDomain="$1"
 
-#Find the subdos
 fileNameStub=$(echo "$1" | tr '.' '_') #name for the output files
+
+
+ranString=$(tr -dc '0-9a-zA-Z' < /dev/urandom | fold -w25 | head -1)
+
+wildcardCNAME=$(host "$ranString"."$singleDomain" 2>/dev/null | grep -i 'NXDOMAIN')
+if [ ! "$wildcardCNAME" ]; then
+	printf " ${YELLOW}%s ${RED}may have a wildcard DNS record for subdomains!${NC} \n" "$singleDomain"
+	exit 1
+fi
+unset wildcardCNAME
 
 
 #Cert transparency a la Cale Black

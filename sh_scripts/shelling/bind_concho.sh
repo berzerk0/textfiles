@@ -15,7 +15,7 @@ NC='\033[0m'
 
 # Display error if not enough arguments given
 if [ $# -ne 1 ]; then
-	printf " ${RED}Usage: ${NC} ./bind_Concho.sh [remote machine ip] [remote_listen_port] \n"
+	printf " ${RED}Usage: ${NC} ./bind_Concho.sh [remote_listen_port] \n"
 	exit 1
 fi
 
